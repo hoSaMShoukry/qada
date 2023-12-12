@@ -1,0 +1,561 @@
+{
+	"info": {
+		"_postman_id": "dd06a6bf-7a48-4193-998e-01fccf9f5a5b",
+		"name": "Qada",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "12019701"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Admin-Login",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}admin/login?email=admin@test.com&password=12345678",
+							"host": [
+								"{{base_url}}admin"
+							],
+							"path": [
+								"login"
+							],
+							"query": [
+								{
+									"key": "email",
+									"value": "admin@test.com"
+								},
+								{
+									"key": "password",
+									"value": "12345678"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Office-Login",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}office/login?email=office@test.com&password=12345678",
+							"host": [
+								"{{base_url}}office"
+							],
+							"path": [
+								"login"
+							],
+							"query": [
+								{
+									"key": "email",
+									"value": "office@test.com"
+								},
+								{
+									"key": "password",
+									"value": "12345678"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Office-Register",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}office/register?email=office@test.com&password=12345678&name=Test Office&phone=1234567",
+							"host": [
+								"{{base_url}}office"
+							],
+							"path": [
+								"register"
+							],
+							"query": [
+								{
+									"key": "email",
+									"value": "office@test.com"
+								},
+								{
+									"key": "password",
+									"value": "12345678"
+								},
+								{
+									"key": "name",
+									"value": "Test Office"
+								},
+								{
+									"key": "phone",
+									"value": "1234567"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Business-Login",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}business/login?email=business@test.com&password=12345678",
+							"host": [
+								"{{base_url}}business"
+							],
+							"path": [
+								"login"
+							],
+							"query": [
+								{
+									"key": "email",
+									"value": "business@test.com"
+								},
+								{
+									"key": "password",
+									"value": "12345678"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Businiess-Register",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}business/register?email=business@test.com&password=12345678&name=Test Business&phone=1234567",
+							"host": [
+								"{{base_url}}business"
+							],
+							"path": [
+								"register"
+							],
+							"query": [
+								{
+									"key": "email",
+									"value": "business@test.com"
+								},
+								{
+									"key": "password",
+									"value": "12345678"
+								},
+								{
+									"key": "name",
+									"value": "Test Business"
+								},
+								{
+									"key": "phone",
+									"value": "1234567"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "User-Register",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}user/register?email=user@test.com&password=12345678&name=Test User&phone=1234567",
+							"host": [
+								"{{base_url}}user"
+							],
+							"path": [
+								"register"
+							],
+							"query": [
+								{
+									"key": "email",
+									"value": "user@test.com"
+								},
+								{
+									"key": "password",
+									"value": "12345678"
+								},
+								{
+									"key": "name",
+									"value": "Test User"
+								},
+								{
+									"key": "phone",
+									"value": "1234567"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "User-Login",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}user/login?email=user@test.com&password=12345678",
+							"host": [
+								"{{base_url}}user"
+							],
+							"path": [
+								"login"
+							],
+							"query": [
+								{
+									"key": "email",
+									"value": "user@test.com"
+								},
+								{
+									"key": "password",
+									"value": "12345678"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "Update profile",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiZGM3YzgwZDQ0NWVhMjI1YTU1MWYxNDIyNmY3NDYwYWUxOGQxMmE0OWMyMGRjNTg3M2RiMDY5YzEzY2U1ZDFmMWFmMTQyNWQwZWFiNTIzM2UiLCJpYXQiOjE3MDA2MTE1MjkuMDMzMDE1LCJuYmYiOjE3MDA2MTE1MjkuMDMzMDE3LCJleHAiOjE3MzIyMzM5MjguODEzODgyLCJzdWIiOiI2Iiwic2NvcGVzIjpbXX0.LrHsQSGi7XBQZ3Y_MZ-4YXH1xss6M3XK-_TERBO2ecKCiXxituwSSrTAp5bSpibKMkC7KUvZNQmReEXvdDYT8tBYz1PG743l_MMP2ZSHkkhQ8AqxrhaPvE85W4hOJHaPhHP58MStXRa7tWnVShbaZBltxcpRanJ-Z0B2M16HPp_9FjMypmmuLZsgJX_yi35orN4NGj9z_uxYva1D3H-xOjzkBlsJVQivffa93o-o18gftOxtn3crBZFkO5qpbsDnTg03mVneq4HjaYTRKY9vPQkVJrSO9IFHx1RuLEJY4XGb_87kgPgvB9nGDNVjLLzlPWyYcK3yfB3aT1qVolh-cScePW5TnaZXyDX1kWdwf71C8HrGvRsrZL40EFRx7gWNsdBdlgWyfJYcBp3Js2rZkHPRdfpxoYzSaL5B8_sX8bmQFGxXIyZ8gRzhAJsfZ8rWCPCtHiBliNNW6ByJ2Lm5xnx12EuoZhWKnj7D9OnQr7CH8CydRK4kvZGCZPI560NbVuv0yI1tnx2nbtOjXR1zqy96lA8JzGSDUf-47IStqrDshRLa05TQpPIiONTZYH9NDs9FnkSndMp8OczdZ72jv5NnEd-f1qo3VS0eRb724NiyZs2ldzD8Uh3wVIyQI3QR-7euFJOZDZdkTnn_E6o4o_DbEVVl1IJKzyeYG4O_q2Y",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}user/profile/update?name=Test Test&email=user@test.com&password=12345678&confirm-password=12345678",
+							"host": [
+								"{{base_url}}user"
+							],
+							"path": [
+								"profile",
+								"update"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "Test Test"
+								},
+								{
+									"key": "email",
+									"value": "user@test.com"
+								},
+								{
+									"key": "password",
+									"value": "12345678"
+								},
+								{
+									"key": "confirm-password",
+									"value": "12345678"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Admin",
+			"item": [
+				{
+					"name": "Get projects",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}admin/projects/index",
+							"host": [
+								"{{base_url}}admin"
+							],
+							"path": [
+								"projects",
+								"index"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Approve project",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}admin/projects/approve?project_id=1",
+							"host": [
+								"{{base_url}}admin"
+							],
+							"path": [
+								"projects",
+								"approve"
+							],
+							"query": [
+								{
+									"key": "project_id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Reject project",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}admin/projects/reject?project_id=1&rejection_reason=test note",
+							"host": [
+								"{{base_url}}admin"
+							],
+							"path": [
+								"projects",
+								"reject"
+							],
+							"query": [
+								{
+									"key": "project_id",
+									"value": "1"
+								},
+								{
+									"key": "rejection_reason",
+									"value": "test note"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete project",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}admin/projects/delete?project_id=1",
+							"host": [
+								"{{base_url}}admin"
+							],
+							"path": [
+								"projects",
+								"delete"
+							],
+							"query": [
+								{
+									"key": "project_id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Office",
+			"item": [
+				{
+					"name": "Get Projects",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}office/projects/index",
+							"host": [
+								"{{base_url}}office"
+							],
+							"path": [
+								"projects",
+								"index"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Place offer",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}office/offers/placeOffer?project_id=1&offer_duration=1&offer_details=test&offer_value=100&offer_stages=3",
+							"host": [
+								"{{base_url}}office"
+							],
+							"path": [
+								"offers",
+								"placeOffer"
+							],
+							"query": [
+								{
+									"key": "project_id",
+									"value": "1"
+								},
+								{
+									"key": "offer_duration",
+									"value": "1"
+								},
+								{
+									"key": "offer_details",
+									"value": "test"
+								},
+								{
+									"key": "offer_value",
+									"value": "100"
+								},
+								{
+									"key": "offer_stages",
+									"value": "3"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "edit offer",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}office/offers/updateOffer?offer_id=1&offer_duration=1&offer_details=test&offer_value=100&offer_stages=3",
+							"host": [
+								"{{base_url}}office"
+							],
+							"path": [
+								"offers",
+								"updateOffer"
+							],
+							"query": [
+								{
+									"key": "offer_id",
+									"value": "1"
+								},
+								{
+									"key": "offer_duration",
+									"value": "1"
+								},
+								{
+									"key": "offer_details",
+									"value": "test"
+								},
+								{
+									"key": "offer_value",
+									"value": "100"
+								},
+								{
+									"key": "offer_stages",
+									"value": "3"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "https://test.m-aboelela.online/api/",
+			"type": "string"
+		},
+		{
+			"key": "base_url2",
+			"value": "http://127.0.0.1:8000/api/",
+			"type": "string"
+		}
+	]
+}
