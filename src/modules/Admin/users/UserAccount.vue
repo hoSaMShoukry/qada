@@ -1,29 +1,18 @@
 <template>
-    <AdminHeader />
     <div class="row g-0">
-        <div class="col-lg-2 sideCard">
-            <ul>
-                <li class="text-light">مرحبا</li>
-                <li class="authName">عبدالعزيز</li>
-                <li class="mt-4"><router-link class="sidbarLink" to="homepage">الرئيسية</router-link></li>
-                <li class="mt-4"><router-link class="sidbarLink" to="usersStats">الاحصائيات</router-link></li>
-                <li class="mt-4"><router-link class="sidbarLink" to="useraccount">الفريق</router-link></li>
-                <li class="mt-4"><router-link class="sidbarLink" to="addedProjects">المشاريع</router-link></li>
-                <li class="mt-4"><router-link class="sidbarLink" to="">تسجيل خروج</router-link></li>
+        <div class="col-lg-12">
+            <ul class="col-lg-12 me-5 d-flex res-li">
+                <li @click="showComponent = 'الملف الشخصى'" class="tab"
+                 :style="{'color':showComponent == 'الملف الشخصى' ? 'orangered' :'white'}">الملف الشخصى</li>
+                <li @click="showComponent = 'الاعدادات'" class="me-5 tab" :style="{'color':showComponent == 'الاعدادات' ? 'orangered' :'white'}">الاعدادات</li>
             </ul>
-        </div>
-        <div class="col-lg-9">
-            <ul class="col-lg-9 me-5 d-flex ">
-                <li class=""><router-link class="text-decoration-none text-light" to="useraccount">الملف
-                        الشخصي</router-link></li>
-                <li><router-link to="usersettings" class="secondLink  me-5">الاعدادات</router-link></li>
-            </ul>
-            <div class=" col-lg-9 me-5 header ">
-                <div class="">
-                    <p class="inf me-5">معلومات العميل </p>
+            <userSettings v-if="showComponent == 'الاعدادات'"/>
+            <div class=" col-lg-12 px-5 header" v-if="showComponent == 'الملف الشخصى'">
+                <div class="px-4 parent-inf">
+                    <p class="inf">معلومات العميل </p>
                 </div>
             </div>
-            <div class="col-lg-9 m-auto card1 ">
+            <div class="col-lg-12 m-auto card1 container text-center w-50 rounded-5" v-if="showComponent == 'الملف الشخصى'">
                 <div class="col-lg-3 m-auto mt-5">
                     <i class="fa-solid fa-user  textcolor fs-5"></i>
                     <label class="text textsize me-2" for="email">اسم العميل</label>
@@ -41,16 +30,17 @@
                 </div>
             </div>
         </div>
-        <div class="col-lg-10 m-auto  mt-5">
-            <div class="inf me-3">اخر المشاريع لهذا العميل</div>
+        <div class=" col-lg-12 px-5  mt-5" v-if="showComponent == 'الملف الشخصى'">
+            <div class="inf px-4">اخر المشاريع لهذا العميل</div>
         </div>
-        <div class="col-lg-8 m-auto my-5  card">
-            <div class="">
-                <div class="col-md-6">
-                    <div class="card-body">فيلا 5 اوض، 3 حمامات في الرياض</div>
+        <div class="px-5">
+            <div class="rounded-5 col-lg-12 m-auto my-5  card" v-if="showComponent == 'الملف الشخصى'">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card-body me-5">فيلا 5 اوض، 3 حمامات في الرياض</div>
                 </div>
-                <div class="col-lg-12 d-flex justify-content-center card2">
-                    <div class="col-lg-2">
+                <div class="row d-flex card2 justify-content-center">
+                    <div class="col-xl-3 col-lg-3 col-md-3 col-sm-12 col-12 text-center">
                         <div class="card-content">
                             <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 26 26" fill="none">
                                 <path
@@ -84,7 +74,7 @@
                             <span class="subContent">500</span>
                         </div>
                     </div>
-                    <div class="col-lg-3 col-sm-12 ">
+                    <div class="col-xl-3 col-lg-3 col-md-3 col-sm-12 col-12 text-center">
                         <div class="card-content">
                             <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 25 25" fill="none">
                                 <path
@@ -108,7 +98,7 @@
                             <span class="subContent">156155618984989</span>
                         </div>
                     </div>
-                    <div class="col-md-3 col-sm-12 ">
+                    <div class="col-xl-3 col-lg-3 col-md-3 col-sm-12 col-12 text-center">
                         <div class="card-content">
                             <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 25 25" fill="none">
                                 <path
@@ -132,7 +122,7 @@
                             <span class="subContent">0</span>
                         </div>
                     </div>
-                    <div class="col-md-4 col-sm-12 ">
+                    <div class="col-xl-3 col-lg-3 col-md-3 col-sm-12 col-12 text-center">
                         <div class="card-content">
                             <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 25 25" fill="none">
                                 <path
@@ -174,36 +164,39 @@
                 <button class="edit-button">تعديل</button>
                 <button class="delete-button">حذف</button>
             </div>
+        </div>      
         </div>
+      
     </div>
 </template>
 
 
-<script>
-import { usebackgroundStore } from "../../../stores/background"
-import AdminHeader from "../pages/AdminHeader.vue"
-export default {
-    components: {
-        AdminHeader
-    },
-    data: () => ({
-        backgroundStore: usebackgroundStore()
-    }),
-    mounted() {
-        this.backgroundStore.setBgColor(1)
-    },
-    unmounted() {
-        this.backgroundStore.setBgColor(0)
-    }
-}
+<script setup>
+import userSettings from '@/modules/Admin/users/UserSettings.vue';
+import { ref } from 'vue';
+
+const showComponent = ref('الملف الشخصى')
 </script>
-    
 <style scoped>
 * {
     direction: rtl;
     box-sizing: border-box;
 
 }
+.tab{
+    cursor: pointer;
+    transition: 0.5s;
+
+}
+.tab:hover{
+scale: 1.1;
+color: orangered !important;
+}
+
+
+
+
+
 
 .sideCard {
     background-color: #59467C;
@@ -253,7 +246,7 @@ li {
 
 .inf {
     color: #FFFFFF;
-    font-size: 3rem;
+    font-size: 2.5rem;
     font-weight: 600;
 }
 
@@ -285,6 +278,8 @@ li {
     display: flex;
     align-items: center;
     margin-top: 1rem;
+    justify-content: center;
+    margin-top: 10px;
 }
 
 .card-content-text {
@@ -310,5 +305,26 @@ li {
     padding: 10px 20px;
 }
 
-@media (max-width: 576px) {}
+@media (max-width: 750px) {
+    .card1{
+        width: 90% !important;
+    }
+}
+@media (max-width:550px) {
+    .inf{
+        font-size: 1.5rem;
+    }
+    
+}
+@media (max-width:400px) {
+    .res-li{
+        margin-right: 0px !important;
+    }
+    .parent-inf{
+        font-size: 1.5rem;
+        margin-right: 0px !important;
+        padding: 0px !important;
+    }
+    
+}
 </style>

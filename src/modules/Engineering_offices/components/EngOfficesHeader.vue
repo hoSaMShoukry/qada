@@ -33,16 +33,16 @@
             
             <button :class="auth != '' ? 'd-none' : ''"  @click="router.push('/loginPanal')" type="button" class="btn ms-2  create">إنشاء حساب</button>
                      
-            <router-link :class="auth !=''? '' : 'd-none'" to="/loginPanal">
-              <button @click="logout" class="btn   create">تسجيل الخروج</button>
+            <router-link @click="logout()" :class="auth !=''? '' : 'd-none'" to="/loginPanal">
+              <button class="btn create">تسجيل الخروج</button>
             </router-link>
             
             <div class="dropdown" v-if="auth">
-              <button class="bg-transparent border-0" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <button @click="notifications.hideProjects_office()" class="bg-transparent border-0" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <li class="nav-item res-li mx-lg-5 ms-5 position-relative mt-2 pl-5">
               <i class="fa-regular fa-bell"></i>
-              <span class="position-absolute unread top-0 start-lg-100  badge rounded-pill bg-danger text-light">
-                {{ acceptedProjects.length + rejectedProjects.length + underVisionProjects.length }}
+              <span v-if="notifications.notificationsLength_office > 0" class="position-absolute unread top-0 start-lg-100  badge rounded-pill bg-danger text-light">
+                {{ notifications.notificationsLength_office }}
                 <span class="visually-hidden">unread messages</span>
               </span>
             </li>
@@ -50,8 +50,8 @@
   <div 
   v-motion-fade-visible
   style="width: 310px; transition: 0.5s;height:360px ; background-color: #0c550b;padding-right: 10px;" class="dropdown-menu notify-menu" aria-labelledby="dropdownMenuButton">
-  <div v-for="project in acceptedProjects" :key="project" class="accepted d-flex mt-1">
-    <div class="svg ms-2" v-if="acceptedProjects.length > 0">
+  <div v-for="project in notifications.officeProjectsAccepted" :key="project" class="officeProjectsAccepted d-flex mt-1">
+    <div class="svg ms-2" v-if="notifications.officeProjectsAccepted.length > 0">
       <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
 <g clip-path="url(#clip0_344_8289)">
 <path d="M14.9997 0C6.72848 0 0 6.729 0 15C0 23.271 6.72848 30 14.9997 30C23.2709 30 30 23.271 30 15C30 6.729 23.2709 0 14.9997 0ZM14.9997 28.0328C7.8135 28.0328 1.96725 22.1862 1.96725 15C1.96725 7.81372 7.81343 1.96733 14.9997 1.96733C22.186 1.96733 28.0325 7.8138 28.0325 15C28.0326 22.1862 22.1859 28.0328 14.9997 28.0328Z" fill="url(#paint0_linear_344_8289)"/>
@@ -73,16 +73,16 @@
 </svg>
 
     </div>
-    <div v-if="acceptedProjects.length > 0" class="info">
+    <div v-if="notifications.officeProjectsAccepted.length > 0" class="info">
       <span class="accept-reason">
       تم الموافقة على  {{ project.project_title }}
       </span>
     </div>
 
   </div>
-  <!--rejected projects-->
-  <div class="rejected-projects d-flex mt-1" v-for="project in rejectedProjects" :key="project" @click="refuseReasone(project)" type="button" data-toggle="modal" data-target="#exampleModal">
-  <div v-if="rejectedProjects.length > 0" class="svg ms-2">
+  <!--officeProjectsRejected projects-->
+  <div class="officeProjectsRejected-projects d-flex mt-1" v-for="project in notifications.officeProjectsRejected" :key="project" @click="refuseReasone(project)" type="button" data-toggle="modal" data-target="#exampleModal">
+  <div v-if="notifications.officeProjectsRejected.length > 0" class="svg ms-2">
     <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
 <g clip-path="url(#clip0_344_8376)">
 <path d="M14.9997 0C6.72848 0 0 6.729 0 15C0 23.271 6.72848 30 14.9997 30C23.2709 30 30 23.271 30 15C30 6.729 23.2709 0 14.9997 0ZM14.9997 28.0328C7.8135 28.0328 1.96725 22.1862 1.96725 15C1.96725 7.81372 7.81343 1.96733 14.9997 1.96733C22.186 1.96733 28.0325 7.8138 28.0325 15C28.0326 22.1862 22.1859 28.0328 14.9997 28.0328Z" fill="url(#paint0_linear_344_8376)"/>
@@ -99,15 +99,15 @@
 </defs>
 </svg>
   </div>
- <div v-if="rejectedProjects.length > 0" class="info">
+ <div v-if="notifications.officeProjectsRejected.length > 0" class="info">
   <span class="reject-reason d-inline-block">تم رفض مشروع {{ project.project_title }} لأن {{ project.note }}</span>
 
     </div>
   </div>
-<!--end rejected projects-->
-<!--accepted projects-->
- <div v-for="project in underVisionProjects" :key="project" class="accepted d-flex mt-1">
-    <div class="svg ms-2" v-if="acceptedProjects.length > 0">
+<!--end officeProjectsRejected projects-->
+<!--officeProjectsAccepted projects-->
+ <div v-for="project in notifications.officeProjectsUnderVistion" :key="project" class="officeProjectsAccepted d-flex mt-1">
+    <div class="svg ms-2" v-if="notifications.officeProjectsAccepted.length > 0">
       <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
 <g clip-path="url(#clip0_344_8289)">
 <path d="M14.9997 0C6.72848 0 0 6.729 0 15C0 23.271 6.72848 30 14.9997 30C23.2709 30 30 23.271 30 15C30 6.729 23.2709 0 14.9997 0ZM14.9997 28.0328C7.8135 28.0328 1.96725 22.1862 1.96725 15C1.96725 7.81372 7.81343 1.96733 14.9997 1.96733C22.186 1.96733 28.0325 7.8138 28.0325 15C28.0326 22.1862 22.1859 28.0328 14.9997 28.0328Z" fill="url(#paint0_linear_344_8289)"/>
@@ -129,13 +129,13 @@
 </svg>
 
     </div>
-    <div v-if="acceptedProjects.length > 0" class="info">
+    <div v-if="notifications.officeProjectsAccepted.length > 0" class="info">
       <span class="accept-reason">تم طرح مشروع  {{ project.project_title }}</span>
 
     </div>
 
   </div>
-<!--end accepted projects-->
+<!--end officeProjectsAccepted projects-->
   </div>
 </div>
            
@@ -149,10 +149,10 @@
               <router-link :class="$route.fullPath == '/EngineeringOffices' ? 'nav-link ra2esia' : 'nav-link'" to="/EngineeringOffices"> الرئيسية</router-link>
             </li>
             <li class="nav-item mx-lg-2">
-              <router-link to="/EngineeringOffices/aboutus" :class="$route.fullPath == '/EngineeringOffices/aboutus' ? 'nav-link ra2esia' : 'nav-link'">من نحن؟</router-link>
+              <router-link to="" :class="$route.fullPath == '/EngineeringOffices/aboutus' ? 'nav-link ra2esia' : 'nav-link'">من نحن؟</router-link>
             </li>
             <li class="nav-item mx-lg-2">
-              <router-link to="/EngineeringOffices/officePanelVue" :class="$route.fullPath == '/EngineeringOffices/officePanelVue' ? 'nav-link ra2esia' : 'nav-link'" v-if="auth">لوحة التحكم</router-link>
+              <router-link to="" :class="$route.fullPath == '/EngineeringOffices/officePanelVue' ? 'nav-link ra2esia' : 'nav-link'" v-if="auth">لوحة التحكم</router-link>
             </li>
             <!--
 <li class="nav-item mx-lg-2">
@@ -172,16 +172,15 @@
             <li class="nav-item mx-lg-2">
               <router-link to="/EngineeringOffices/contactus" :class="$route.fullPath == '/EngineeringOffices/contactus' ? 'nav-link ra2esia' : 'nav-link'">إتصل بنا</router-link>
             </li>
-            <button @click="logout" :class="auth !='' ? 'd-none' : ''" type="button" class="btn  login mx-lg-4">تسجيل دخول</button>
+            <button :class="auth !='' ? 'd-none' : ''" type="button" class="btn  login mx-lg-4">تسجيل دخول</button>
             <button :class="auth !='' ? 'd-none' : ''"  type="button" class="btn   create">إنشاء حساب</button>
             <button v-if="!x.matches" :class="auth !=''? '' : 'd-none'" @click="logout" class="btn   create">تسجيل الخروج</button>
             <div class="dropdown" v-if="!x.matches" :class="!auth ? 'd-none' :''">
-              <button class="bg-transparent border-0" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <button @click="notifications.hideProjects_office()" class="bg-transparent border-0" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <li class="nav-item res-li mx-lg-5 ms-5 position-relative mt-2 pl-5">
               <i class="fa-regular fa-bell"></i>
-              <span class="position-absolute unread top-0 start-lg-100  badge rounded-pill bg-danger text-light">
-                {{ acceptedProjects.length + rejectedProjects.length + underVisionProjects.length }}
-
+              <span v-if="notifications.notificationsLength > 0" class="position-absolute unread top-0 start-lg-100  badge rounded-pill bg-danger text-light">
+                {{ notifications.notificationsLength_office }}
                 <span class="visually-hidden">unread messages</span>
               </span>
             </li>
@@ -189,8 +188,8 @@
   <div
   v-motion-fade-visible
   style="width: 310px;transition: 0.5s; height:360px ; background-color: #0c550b;padding-right: 10px;" class="dropdown-menu notify-menu" aria-labelledby="dropdownMenuButton">
-  <div v-for="project in acceptedProjects" :key="project" class="accepted d-flex mt-1">
-    <div class="svg ms-2" v-if="acceptedProjects.length > 0">
+  <div v-for="project in notifications.officeProjectsAccepted" :key="project" class="officeProjectsAccepted d-flex mt-1">
+    <div class="svg ms-2" v-if="notifications.officeProjectsAccepted.length > 0">
       <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
 <g clip-path="url(#clip0_344_8289)">
 <path d="M14.9997 0C6.72848 0 0 6.729 0 15C0 23.271 6.72848 30 14.9997 30C23.2709 30 30 23.271 30 15C30 6.729 23.2709 0 14.9997 0ZM14.9997 28.0328C7.8135 28.0328 1.96725 22.1862 1.96725 15C1.96725 7.81372 7.81343 1.96733 14.9997 1.96733C22.186 1.96733 28.0325 7.8138 28.0325 15C28.0326 22.1862 22.1859 28.0328 14.9997 28.0328Z" fill="url(#paint0_linear_344_8289)"/>
@@ -212,16 +211,16 @@
 </svg>
 
     </div>
-    <div v-if="acceptedProjects.length > 0" class="info">
+    <div v-if="notifications.officeProjectsAccepted.length > 0" class="info">
       <span class="accept-reason">
       تم الموافقة على  {{ project.project_title }}
       </span>
     </div>
 
   </div>
-  <!--rejected projects-->
-  <div class="rejected-projects d-flex mt-1" v-for="project in rejectedProjects" :key="project" @click="refuseReasone(project)" type="button" data-toggle="modal" data-target="#exampleModal">
-  <div v-if="rejectedProjects.length > 0" class="svg ms-2">
+  <!--officeProjectsRejected projects-->
+  <div class="officeProjectsRejected-projects d-flex mt-1" v-for="project in notifications.officeProjectsRejected" :key="project" @click="refuseReasone(project)" type="button" data-toggle="modal" data-target="#exampleModal">
+  <div v-if="notifications.officeProjectsRejected.length > 0" class="svg ms-2">
     <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
 <g clip-path="url(#clip0_344_8376)">
 <path d="M14.9997 0C6.72848 0 0 6.729 0 15C0 23.271 6.72848 30 14.9997 30C23.2709 30 30 23.271 30 15C30 6.729 23.2709 0 14.9997 0ZM14.9997 28.0328C7.8135 28.0328 1.96725 22.1862 1.96725 15C1.96725 7.81372 7.81343 1.96733 14.9997 1.96733C22.186 1.96733 28.0325 7.8138 28.0325 15C28.0326 22.1862 22.1859 28.0328 14.9997 28.0328Z" fill="url(#paint0_linear_344_8376)"/>
@@ -238,15 +237,15 @@
 </defs>
 </svg>
   </div>
- <div v-if="rejectedProjects.length > 0" class="info">
+ <div v-if="notifications.officeProjectsRejected.length > 0" class="info">
   <span class="reject-reason d-inline-block">تم رفض مشروع {{ project.project_title }} لأن {{ project.note }}</span>
 
     </div>
   </div>
-<!--end rejected projects-->
-<!--accepted projects-->
- <div v-for="project in underVisionProjects" :key="project" class="accepted d-flex mt-1">
-    <div class="svg ms-2" v-if="acceptedProjects.length > 0">
+<!--end officeProjectsRejected projects-->
+<!--officeProjectsAccepted projects-->
+ <div v-for="project in notifications.officeProjectsUnderVistion" :key="project" class="officeProjectsAccepted d-flex mt-1">
+    <div class="svg ms-2" v-if="notifications.officeProjectsAccepted.length > 0">
       <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
 <g clip-path="url(#clip0_344_8289)">
 <path d="M14.9997 0C6.72848 0 0 6.729 0 15C0 23.271 6.72848 30 14.9997 30C23.2709 30 30 23.271 30 15C30 6.729 23.2709 0 14.9997 0ZM14.9997 28.0328C7.8135 28.0328 1.96725 22.1862 1.96725 15C1.96725 7.81372 7.81343 1.96733 14.9997 1.96733C22.186 1.96733 28.0325 7.8138 28.0325 15C28.0326 22.1862 22.1859 28.0328 14.9997 28.0328Z" fill="url(#paint0_linear_344_8289)"/>
@@ -268,59 +267,77 @@
 </svg>
 
     </div>
-    <div v-if="acceptedProjects.length > 0" class="info">
+    <div v-if="notifications.officeProjectsAccepted.length > 0" class="info">
       <span class="accept-reason">تم طرح مشروع  {{ project.project_title }}</span>
 
     </div>
 
   </div>
-<!--end accepted projects-->
+<!--end officeProjectsAccepted projects-->
   </div>
 </div>
           </ul>
         </div>
       </div>
     </nav>
-    <!--
-<div class="container artcl">
-      <p class="text-light">لوحة التحكم</p>
-      <h3>الفريق</h3>
-    </div>
-    -->
-    
+    <div class="container artcl" >
+      <p class="text-light" 
+      v-motion-slide-top
+      style="transition: 0.5s;"
+      >{{
+       $route.fullPath == '/EngineeringOffices/officePanelVue' || $route.fullPath == '/EngineeringOffices/successPartners' 
+      ? 'لوحة التحكم' : $route.fullPath == '/EngineeringOffices/faq' || $route.fullPath == '/EngineeringOffices/termsandconditions'
+      ? 'المساعدة' : '' }}</p>
+      <h3
+      class="header-words"
+     style="transition: 0.5s;"
+      v-motion-roll-bottom>
+      {{ 
+      $route.fullPath == '/EngineeringOffices/aboutus' 
+      ? 'عن ميدانى' 
+      : $route.fullPath == '/EngineeringOffices/officePanelVue' 
+      ? 'الرئيسية' : $route.fullPath == '/EngineeringOffices/faq' 
+      ? 'اهم الاسئلة المتكررة عن ميدانى'
+      : $route.fullPath == '/EngineeringOffices/termsandconditions'
+      ? 'شروط استخدام خدمات ميدانى' 
+      : $route.fullPath == '/EngineeringOffices/successPartners'
+      ? 'المكاتب الهندسية المسجلة'
+      : '' }}
+      </h3>
+    </div>  
   </div>
 </template>
 
 <script setup>
 import router from '@/router';
 import { onMounted, ref } from 'vue';
+import { notify } from '@/stores/notifications';
+ const notifications = notify();
 const myrefusedProject = ref({});
 const refuseReasone = (refusedProject)=>{
   myrefusedProject.value = refusedProject;
 console.log(myrefusedProject.value);
 }
 const x = ref(window.matchMedia("(max-width:991px)"));
-const allProjects = ref([]);
-const underVisionProjects = ref([]);
-const rejectedProjects = ref([]);
-const acceptedProjects = ref([]);
 const auth = ref(null)
 const logout = ()=> {
-    localStorage.clear();
-    router.push('/')
+  if(localStorage.getItem(`notifications${notifications.userId}`) ||  localStorage.getItem(`office_notifications${notifications.userId}`)){
+    localStorage.removeItem('email');
+    localStorage.removeItem('name');
+    localStorage.removeItem('type');
+    localStorage.removeItem('token');
+    localStorage.removeItem('phone');
+    localStorage.removeItem('id');
+    router.push('/loginPanal')
+  }else{
+  localStorage.clear();
+  router.push('/loginPanal')
+  }
 }
 onMounted(() => {
+  notifications.getAllProjects();
     let token = localStorage.getItem('token') ? localStorage.getItem('token') : ''
    auth.value = token !='' ? token  : ''; 
-   setTimeout(() => {
-   allProjects.value = JSON.parse(sessionStorage.getItem('allProjects'));
-   acceptedProjects.value = JSON.parse(sessionStorage.getItem('acceptedProjects'));
-   underVisionProjects.value = JSON.parse(sessionStorage.getItem('underVisionProjects'));
-   rejectedProjects.value = JSON.parse(sessionStorage.getItem('rejectedProjects'));
-   console.log(allProjects.value);
-   console.log(underVisionProjects.value);
-   console.log(rejectedProjects.value); 
-   }, 100);
 });
 
 
@@ -451,6 +468,7 @@ li span {
 @media (max-width:991px) {
   #navbarSupportedContent{
       z-index: 999;
+      border-radius: 20px;
       background-color: #2A665D;
       margin-left: 70%;
     }  
@@ -471,35 +489,48 @@ li span {
         display: inline-block;
     }
 }
+@media (max-width: 576px) {
+  .artcl {
+    left: 0;
+  }
+}
 @media (max-width:500px) {
   #navbarSupportedContent{
-    position: absolute;
-    top: 50%;
-    min-width: 50%;
-  }
-  .responsive-header{
+    position: relative;
+      top: -80px;
+      right: -20px !important;
+       
+      }
+    .responsive-header{
+      display: flex;
     position: absolute;
     top: 0px;
-    left: 0px;
-    display: grid !important;
-    grid-template-columns: auto;
+    left: -40px;
+    justify-content: end !important;
+    flex-wrap: nowrap;
     min-height: 100px;
   }
-.responsive-header .res-li{
+  .create {
+        margin-left: 50px !important;
+      }
+  .responsive-header .res-li{
   position: relative;
-  top: 10px !important;
-  right: 70px;
+  left: 20px !important;
+
+}
+.notify-menu{
+  position: absolute !important;
+  top:70px !important;
+  left: 40px !important;
+  
 }
   .navbar-toggler{
     margin-bottom: 100px !important;
   }
   
 }
-@media (max-width: 576px) {
-  .artcl {
-    left: 0;
-  }
-}
+
+
 @media (max-width: 437px) {
   #navbarSupportedContent{
         z-index: 999;
@@ -515,24 +546,32 @@ li span {
   }
   
 }
-@media (max-width:345px) {
-  .responsive-header{
-    position: absolute;
-    top: 0px;
-    left: 10px;
-    display: grid !important;
-    grid-template-columns: auto;
-    min-height: 100px;
+@media (max-width:315px) {
+  .create {
+     width: 100px !important;
+     height: 40px !important;
+     font-size: 13px !important;    
   }
-.responsive-header .res-li{
-  position: relative;
-  top: 10px !important;
-  right: 70px;
-}
-  .navbar-toggler{
-    margin-bottom: 100px !important;
+  .login{
+    width: 115px !important;
+    height: 40px !important;
+     font-size: 13px !important;    
+  }
+  .notify-menu{
+    max-width: 95vw !important;
   }
   
+}
+@media (max-width:302px) {
+  .create {
+     width: 95px !important;
+     height: 40px !important;
+      
+  }
+  .login{
+    width: 105px !important;
+    height: 40px !important;
+  }
 }
 
 </style>

@@ -1,72 +1,5 @@
 <template>
-    <AdminHeader />
     <div class="container-fliud">
-        <div class="row g-0">
-            <div class="col-lg-3 sideCard">
-                <ul>
-                    <li class="text-light">مرحبا</li>
-                    <li class="authName">عبدالعزيز</li>
-                    <li class="mt-4"><router-link class="sidbarLink" to="homepage">الرئيسية</router-link></li>
-                    <li class="mt-4"><router-link class="sidbarLink" to="usersStats">الاحصائيات</router-link></li>
-                    <li class="mt-4"><router-link class="sidbarLink" to="useraccount">الفريق</router-link></li>
-                    <li class="mt-4"><router-link class="sidbarLink" to="addedProjects">المشاريع</router-link></li>
-                    <li class="mt-4"><router-link class="sidbarLink" to="">تسجيل خروج</router-link></li>
-                </ul>
-            </div>
-            <div class="col-lg-9">
-                <div class="row g-0">
-                    <ul class="tabs d-flex">
-                        <li class="me-5 "><router-link to="usersStats" class="tab">افراد</router-link></li>
-                        <li class="mx-5 "><router-link to="businessState" class="tab">اعمال</router-link></li>
-                        <li><router-link to="officeStats" class="tab">مكاتب هندسية</router-link></li>
-                    </ul>
-                </div>
-                <div class="row g-0 justify-content-center  text-center mt-5">
-                    <div class="col-lg-3 col-md-5 col-5 d-flex flex-column justify-content-center box me-4 mt-5">
-                        <div class="d-flex align-items-center justify-content-center">
-                            <svg class="" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                fill="none">
-                                <path opacity="0.3" d="M15 17H9V16H5V19H19V16H15V17ZM4 14H9V11H15V14H20V9H4V14Z"
-                                    fill="white" />
-                                <path
-                                    d="M20 7H16V5L14 3H10L8 5V7H4C2.9 7 2 7.9 2 9V14C2 14.75 2.4 15.38 3 15.73V19C3 20.11 3.89 21 5 21H19C20.11 21 21 20.11 21 19V15.72C21.59 15.37 22 14.73 22 14V9C22 7.9 21.1 7 20 7ZM10 5H14V7H10V5ZM19 19H5V16H9V17H15V16H19V19ZM11 15V13H13V15H11ZM20 14H15V11H9V14H4V9H20V14Z"
-                                    fill="white" />
-                            </svg>
-                            <p class="text mt-3">عدد المشاريع بالمنصة</p>
-                        </div>
-                        <p class="number">12000</p>
-                    </div>
-                    <div class="col-lg-3 col-md-5 col-5 d-flex flex-column justify-content-center box me-4 mt-5">
-                        <div class="d-flex align-items-center justify-content-center">
-                            <svg class="" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                fill="none">
-                                <path opacity="0.3" d="M15 17H9V16H5V19H19V16H15V17ZM4 14H9V11H15V14H20V9H4V14Z"
-                                    fill="white" />
-                                <path
-                                    d="M20 7H16V5L14 3H10L8 5V7H4C2.9 7 2 7.9 2 9V14C2 14.75 2.4 15.38 3 15.73V19C3 20.11 3.89 21 5 21H19C20.11 21 21 20.11 21 19V15.72C21.59 15.37 22 14.73 22 14V9C22 7.9 21.1 7 20 7ZM10 5H14V7H10V5ZM19 19H5V16H9V17H15V16H19V19ZM11 15V13H13V15H11ZM20 14H15V11H9V14H4V9H20V14Z"
-                                    fill="white" />
-                            </svg>
-                            <p class="text me-2 mt-3">مشاريع يتم مراجعتها</p>
-                        </div>
-                        <p class="number">12000</p>
-                    </div>
-                    <div class="col-lg-3 col-md-6 col-6 d-flex flex-column justify-content-center box me-4 mt-5">
-                        <div class="d-flex align-items-center justify-content-center">
-                            <svg class="" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                fill="none">
-                                <path opacity="0.3" d="M15 17H9V16H5V19H19V16H15V17ZM4 14H9V11H15V14H20V9H4V14Z"
-                                    fill="white" />
-                                <path
-                                    d="M20 7H16V5L14 3H10L8 5V7H4C2.9 7 2 7.9 2 9V14C2 14.75 2.4 15.38 3 15.73V19C3 20.11 3.89 21 5 21H19C20.11 21 21 20.11 21 19V15.72C21.59 15.37 22 14.73 22 14V9C22 7.9 21.1 7 20 7ZM10 5H14V7H10V5ZM19 19H5V16H9V17H15V16H19V19ZM11 15V13H13V15H11ZM20 14H15V11H9V14H4V9H20V14Z"
-                                    fill="white" />
-                            </svg>
-                            <p class="text me-2 mt-3">مشاريع قيد التنفيذ</p>
-                        </div>
-                        <p class="number">12000</p>
-                    </div>
-                </div>
-            </div>
-        </div>
         <div class="row g-0 justify-content-center text-center my-5 ">
             <div class="col-lg-3 col-md-5 col-5 d-flex flex-column justify-content-center box me-3 mt-2">
                 <div class="d-flex align-items-center justify-content-center">
@@ -124,30 +57,15 @@
     </div>
 </template>
 
-<script>
-import { usebackgroundStore } from "../../../stores/background"
-import AdminHeader from "../pages/AdminHeader.vue"
-export default {
-    components: {
-        AdminHeader
-    },
-    data: () => ({
-        backgroundStore: usebackgroundStore()
-    }),
-    mounted() {
-        this.backgroundStore.setBgColor(1)
-    },
-    unmounted() {
-        this.backgroundStore.setBgColor(0)
-    }
-}
-</script>
+<script setup></script>
 
 <style scoped>
 * {
     direction: rtl;
 }
-
+.container-fliud{
+    min-height: 70vh !important;
+}
 .container {
     margin-left: 0px;
     margin-right: 0px;

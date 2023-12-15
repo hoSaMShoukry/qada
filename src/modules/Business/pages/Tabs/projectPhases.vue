@@ -24,12 +24,15 @@
           <div class=" ">
             <p class="me-3">{{ stage.title }}</p>
           </div>
-          <div class=" ">
+          <!--
+            <div class=" ">
             <button class="first-stage mx-2" @click="showModal">طلب تعديل</button>
             <modal-component v-if="isModalVisible" @close="closeModal"></modal-component>
 
             <button class="recieve-stage mx-2">استلام المرحلة</button>
           </div>
+          -->
+          
         </div>
         <div class="seperator"></div>
         <div class="d-flex justify-content-between align-items-baseline my-2 lastCard">
@@ -40,7 +43,10 @@
           </div>
           <div class="button-stage">
             <button class=" request-start-working mx-2">طلب بدءالاعمال</button>
+            <!--
             <button class="edit-button mx-2">توقيع غرامة تأخير</button>
+
+            -->
           </div>
         </div>
       </div>

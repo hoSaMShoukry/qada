@@ -126,7 +126,10 @@ export default {
 * {
   direction: rtl;
 }
-
+.container{
+  min-height: 70vh;
+  padding-top: 10vh;
+}
 .header {
   text-align: center;
   justify-content: center;
@@ -180,5 +183,11 @@ hr {
   color: #626466;
   font-size: 25px;
   font-weight: 700;
+}
+@media (max-width:500px) {
+ 
+  .header p{
+    font-size: 2.5rem !important;
+  }
 }
 </style>

@@ -51,7 +51,7 @@
         <div class="text-danger" v-if="sendRegisterData.registerd"><span>{{ sendRegisterData.registerd }}</span></div>
                     -->
         <button @click.prevent="sendRegisterData.updateAccount('https://test.m-aboelela.online/api/business/profile/update') , v$.$validate()" class="btn btn-primary mt-3">
-            <span v-if="sendRegisterData.loading == false" class="fs-6">إنشاء</span>
+            <span v-if="sendRegisterData.loading == false" class="fs-6">تعديل</span>
           <div class="d-flex justify-content-center">
             <atom-spinner v-if="sendRegisterData.loading == true" :animation-duration="1000" :size="45" color="#ff1d5e" />
 

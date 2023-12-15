@@ -248,4 +248,20 @@ hr {
 .checkbox-label .mycheckbox {
     background-color: #259F5A;
 }
+@media (max-width:362px) {
+    .checkbox-label{
+    width: 100vw;
+    display: flex;
+    justify-content: flex-start;
+    }
+    
+    
+}
+@media (max-width:321px) {
+  .checkbox-label , .btn{
+    position: relative;
+    left: 20px !important;
+  }
+  
+}
 </style>

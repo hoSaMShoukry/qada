@@ -1,7 +1,7 @@
 <template>
   <div>
     <MemberHeader />
-    <div class="container article mb-5" v-motion-slide-right style="transition: 0.5s;">
+    <div class="container article mb-5 pt-5" v-motion-slide-right style="transition: 0.5s;">
       <p>
         مرحبًا بك في منصة قدة! نحن نسعى جاهدين لتوفير بيئة ملائمة ومبتكرة
         للمهندسين والعمل الحر في المملكة العربية السعودية. نؤمن بأن المهندسين

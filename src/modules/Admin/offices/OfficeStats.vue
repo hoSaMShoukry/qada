@@ -1,25 +1,8 @@
 <template>
     <div>
-        <AdminHeader />
         <div class="row">
-            <div class="col-lg-3 sideCard">
-                <ul>
-                    <li class="text-light">مرحبا</li>
-                    <li class="authName">عبدالعزيز</li>
-                    <li class="mt-4"><router-link class="sidbarLink" to="homepage">الرئيسية</router-link></li>
-                    <li class="mt-4"><router-link class="sidbarLink" to="usersStats">الاحصائيات</router-link></li>
-                    <li class="mt-4"><router-link class="sidbarLink" to="useraccount">الفريق</router-link></li>
-                    <li class="mt-4"><router-link class="sidbarLink" to="addedProjects">المشاريع</router-link></li>
-                    <li class="mt-4"><router-link class="sidbarLink" to="">تسجيل خروج</router-link></li>
-                </ul>
-            </div>
-            <div class="col-lg-9 ">
+            <div class="col-lg-12 ">
                 <div class="row g-0 ">
-                    <ul class="col-lg- 4 tabs d-flex">
-                        <li class="me-5 "><router-link to="usersStats" class="tab">افراد</router-link></li>
-                        <li class="mx-5 "><router-link to="businessState" class="tab">اعمال</router-link></li>
-                        <li><router-link to="officeStats" class="tab">مكاتب هندسية</router-link></li>
-                    </ul>
                     <div class="col-lg-12">
                         <div class="row justify-content-between w-75 p-3 m-auto my-3 cardd">
                             <div class="col-lg-3 col-sm-12 text-center">
@@ -98,25 +81,7 @@
     </div>
 </template>
 
-<script>
-import { usebackgroundStore } from "../../../stores/background"
-import AdminHeader from "../pages/AdminHeader.vue"
-export default {
-    components: {
-        AdminHeader
-    },
-    data: () => ({
-        backgroundStore: usebackgroundStore()
-    }),
-    mounted() {
-        this.backgroundStore.setBgColor(1)
-    },
-    unmounted() {
-        this.backgroundStore.setBgColor(0)
-    }
-}
-</script>
-
+<script setup></script>
 <style scoped>
 * {
     direction: rtl;

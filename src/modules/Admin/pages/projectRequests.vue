@@ -19,35 +19,22 @@
 </div>
 </div>
 <!--end modal-->
+<div class="loading w-100 mt-5 pt-5" v-if="allProjects.length == 0">
+        <div class="text-center w-100 tex-white"><span class="fs-3 d-inline-block tex-white" style="color: white;">جارى الحميل...</span></div>
+        <div class="w-100 text-center">
+          <span class="d-inline-block">
+            <intersecting-circles-spinner :animation-duration="1200" :size="70" color="#ff1d5e"/>
+          </span>
+        </div>
+      </div>
   <div>
-      <AdminHeader />
-      <div class="container ">
+      
           <div class="row">
-              <div class="col-lg-3 sideCard">
-              <ul>
-                  <li class="text-light">مرحبا</li>
-                  <li class="authName">عبدالعزيز</li>
-                  <li class="mt-4"><router-link class="sidbarLink" to="homepage">الرئيسية</router-link></li>
-                  <li class="mt-4"><router-link class="sidbarLink" to="usersStats">الاحصائيات</router-link></li>
-                  <li class="mt-4"><router-link class="sidbarLink" to="useraccount">الفريق</router-link></li>
-                  <li class="mt-4"><router-link class="sidbarLink" to="addedProjects">المشاريع</router-link></li>
-                  <li class="mt-4"><router-link class="sidbarLink" :to="{name:'reciveContacts'}">التواصل</router-link></li>
-                  <li class="mt-4"><router-link class="sidbarLink" to="">تسجيل خروج</router-link></li>
-              </ul>
-          </div>
-              <div class="col-lg-10  ">
-                  <div class=" mb-3">
-                      <ul class="d-flex ">
-                          <li><router-link to="/admin/addedProjects" class="tab ">اخر المشاريع المضافة علي
-                                  المنصة</router-link></li>
-                          <li class=""><router-link to="/admin/pendingProjects" class="tab mx-5">طلبات
-                                  المشاريع</router-link></li>
-                      </ul>
-                  </div>
+              <div class="col-lg-12">
                   <div v-for="project in allProjects" :key="project.id">
-                      <div class="row justify-content-center my-5">
+                      <div class="row justify-content-center">
                           <div class="col-lg-12 col-md-8  col-sm-12">
-                              <div class="card">
+                              <div class="card mt-5 rounded-5 px-5">
                                   <div class="row align-items-baseline justify-content-between">
                                       <div class="col-md-6">
                                           <div class="card-body">{{ project.project_title }}</div>
@@ -185,7 +172,7 @@
                                       <div class="d-flex justify-content-center my-3">
                                           <button @click="acceptProject(project)" class="edit-button text-white">موافقة</button>
                                           <button type="button" class="btn btn-primary delete-button" data-toggle="modal" data-target="#exampleModal" @click="projectId = project.id">رفض</button>
-                                          <input class="form-control" type="text" :placeholder="project.state == 0 ? 'تحت النظر' : project.state == 1 ? 'تم القبول' : 'تم رفض المشروع'" readonly>
+                                          <input class="form-control me-3" type="text" :placeholder="project.state == 0 ? 'تحت النظر' : project.state == 1 ? 'تم القبول' : 'تم رفض المشروع'" readonly>
                                       
                                       </div>
                                   </div>
@@ -196,26 +183,35 @@
               </div>
           </div>
       </div>
-  </div>
 </template>
 <script>
-import { onMounted, onUnmounted, ref, computed } from 'vue';
-import { usebackgroundStore } from "../../../stores/background"
-import AdminHeader from "./AdminHeader.vue"
+import { onMounted, ref, computed } from 'vue';
 import axios from 'axios';
 import router from '@/router';
+import { IntersectingCirclesSpinner } from 'epic-spinners'
 //import globalService from '../../../services/globalservice';
 export default {
-  components: {
-      AdminHeader
-  },
+    components:{
+        IntersectingCirclesSpinner
+
+    },
   setup() {
-      const logOut = ()=>{
-          localStorage.clear();
-          router.push('/')
-      }
-      const backgroundStore = usebackgroundStore()
-      const allProjects = ref([]);
+    const logOut = ()=> {
+        if(localStorage.getItem('notifications') ||localStorage.getItem('office_notifications')){
+    localStorage.removeItem('email');
+    localStorage.removeItem('name');
+    localStorage.removeItem('type');
+    localStorage.removeItem('token');
+    localStorage.removeItem('phone');
+    localStorage.removeItem('id');
+    router.push('/loginPanal')
+
+  }else{
+  localStorage.clear();
+  router.push('/loginPanal')
+  }
+}      
+     const allProjects = ref([]);
       const rejected = ref('');
       let projectId = ref(null);
       let rejectionReason = ref(null);
@@ -284,11 +280,7 @@ export default {
       }
       const filteredProjects = computed(() => allProjects.value.filter(project => project.state == 1));
       onMounted(() => {
-          backgroundStore.setBgColor(1)
           getAllProjects();
-      })
-      onUnmounted(() => {
-          backgroundStore.setBgColor(0)
       })
       const rejectProject = async ()=>{
   await axios.post(`https://test.m-aboelela.online/api/admin/projects/reject?project_id=${projectId.value}`,{
@@ -341,11 +333,10 @@ export default {
           projectId,
           rejectProject,
           logOut,
-          backgroundStore,
           allProjects,
           addedprojects,
           getAllProjects,
-          filteredProjects
+          filteredProjects,
       };
   }
 }

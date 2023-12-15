@@ -1,14 +1,17 @@
 <template>
     <AdminHeader />
     <div class="container-fliud">
-        <div class="row g-0">
-           <Sidecard/>
-            <div class="col-lg-8 me-5">
+        <div class="row g-0" style="position: relative;">
+            <AdminSideBar @showComp="showComponent"/>
+            <UsersStats v-if="component == 'الاحصائيات'"/>
+            <UserAccount v-if="component == 'الفريق'"/>
+            <AddedProjects v-if="component == 'المشاريع'"/>
+            <div class="col-lg-8 me-5" v-if="component == 'الرئيسية'">
                 <div class="row header-title my-3">
                     مسار مشاريعك
                 </div>
                 <div class="row w-100">
-                    <div class="col-lg-5 col-md-5 col-sm-10 col-10 statics  ">
+                    <div class="col-lg-5 col-md-5 col-sm-10 col-10 statics">
                         <div class="card-subtitle my-3">
                             المعلومات شاملة
                         </div>
@@ -79,7 +82,7 @@
                 </div>
             </div>
         </div>
-        <div class="row my-5">
+        <div class="row my-5" v-if="component == 'الرئيسية'">
             <div class="team-member mb-3">
                 اعضاء الفريق
             </div>
@@ -124,25 +127,28 @@
     </div>
 </template>
 
-<script>
+<script setup>
+import { onMounted, onUnmounted, ref } from "vue";
 import { usebackgroundStore } from "../../../stores/background"
 import AdminHeader from "../pages/AdminHeader.vue"
-import Sidecard from "./sidecard.vue"
-export default {
-    components: {
-    AdminHeader,
-    Sidecard
-},
-    data: () => ({
-        backgroundStore: usebackgroundStore()
-    }),
-    mounted() {
-        this.backgroundStore.setBgColor(1)
-    },
-    unmounted() {
-        this.backgroundStore.setBgColor(0)
-    }
+import AdminSideBar from "./AdminSideBar.vue"
+import UsersStats from "../users/UsersStats.vue";
+import UserAccount from "../users/UserAccount.vue";
+import AddedProjects from "./AddedProjects.vue";
+const component = ref('الرئيسية')
+const showComponent = (value)=>{
+ component.value = value;
+ console.log(component.value);
 }
+const backgroundStore = usebackgroundStore();
+onMounted(() => {
+    backgroundStore.setBgColor(1);
+    showComponent
+});
+onUnmounted(() => {
+    backgroundStore.setBgColor(0);
+    showComponent
+});
 </script>
 
 <style  scoped>

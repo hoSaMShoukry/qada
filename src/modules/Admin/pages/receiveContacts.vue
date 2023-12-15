@@ -58,8 +58,20 @@ components: {
 },
 setup() {
     const logOut = ()=>{
-        localStorage.clear();
-        router.push('/')
+      if(localStorage.getItem('notifications') ||localStorage.getItem('office_notifications')){
+    localStorage.removeItem('email');
+    localStorage.removeItem('name');
+    localStorage.removeItem('type');
+    localStorage.removeItem('token');
+    localStorage.removeItem('phone');
+    localStorage.removeItem('id');
+
+    router.push('/loginPanal')
+
+  }else{
+  localStorage.clear();
+  router.push('/loginPanal')
+  }
     }
     const allContacts = ref([])
     const backgroundStore = usebackgroundStore()

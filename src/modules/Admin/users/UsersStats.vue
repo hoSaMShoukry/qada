@@ -1,27 +1,18 @@
 <template>
-    <AdminHeader />
     <div class="container-fliud">
         <div class="row g-0">
-            <div class="col-lg-3 sideCard">
-                <ul>
-                    <li class="text-light">مرحبا</li>
-                    <li class="authName">عبدالعزيز</li>
-                    <li class="mt-4"><router-link class="sidbarLink" to="homepage">الرئيسية</router-link></li>
-                    <li class="mt-4"><router-link class="sidbarLink" to="/admin/usersStats">الاحصائيات</router-link></li>
-                    <li class="mt-4"><router-link class="sidbarLink" to="useraccount">الفريق</router-link></li>
-                    <li class="mt-4"><router-link class="sidbarLink" to="addedProjects">المشاريع</router-link></li>
-                    <li class="mt-4"><router-link class="sidbarLink" to="">تسجيل خروج</router-link></li>
-                </ul>
-            </div>
-            <div class="col-lg-9">
+            <div class="col-lg-12">
                 <div class="row g-0">
                     <ul class="tabs d-flex">
-                        <li class="me-5 "><router-link to="usersStats" class="tab">افراد</router-link></li>
-                        <li class="mx-5 "><router-link to="businessState" class="tab">اعمال</router-link></li>
-                        <li><router-link to="officeStats" class="tab">مكاتب هندسية</router-link></li>
+                        <li @click="showComponent = 'افراد'" :style="{'color' : showComponent == 'افراد' ? 'orangered' : ''}" class="me-5 tab">افراد</li>
+                        <li @click="showComponent = 'اعمال'" :style="{'color' : showComponent == 'اعمال' ? 'orangered' : ''}" class="mx-5 tab">اعمال</li>
+                        <li @click="showComponent = 'مكاتب هندسية'" :style="{'color' : showComponent == 'مكاتب هندسية' ? 'orangered' : ''}" class="tab">مكاتب هندسية</li>
                     </ul>
                 </div>
-                <div class="row g-0 justify-content-center  text-center mt-5">
+                <businessState v-if="showComponent == 'اعمال'"/>
+                <OfficeStats v-if="showComponent == 'مكاتب هندسية'"/>
+
+                <div class="row g-0 justify-content-center  text-center mt-5 "  v-if="showComponent == 'افراد'">
                     <div class="col-lg-3 col-md-5 col-5 d-flex flex-column justify-content-center box me-4 mt-5">
                         <div class="d-flex align-items-center justify-content-center">
                             <svg class="" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
@@ -67,7 +58,7 @@
                 </div>
             </div>
         </div>
-        <div class="row g-0 justify-content-center text-center my-5 ">
+        <div class="row g-0 justify-content-center text-center my-5 " v-if="showComponent == 'افراد'">
             <div class="col-lg-3 col-md-5 col-5 d-flex flex-column justify-content-center boxpackage me-3 mt-2">
                 <div class="d-flex align-items-center justify-content-center">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -124,23 +115,11 @@
     </div>
 </template>
 
-<script>
-import { usebackgroundStore } from "../../../stores/background"
-import AdminHeader from "../pages/AdminHeader.vue"
-export default {
-    components: {
-        AdminHeader
-    },
-    data: () => ({
-        backgroundStore: usebackgroundStore()
-    }),
-    mounted() {
-        this.backgroundStore.setBgColor(1)
-    },
-    unmounted() {
-        this.backgroundStore.setBgColor(0)
-    }
-}
+<script setup>
+import OfficeStats from '../offices/OfficeStats.vue';
+import businessState from '@/modules/Admin/business/BusinessStats.vue'
+import { ref } from 'vue';
+const showComponent = ref('افراد');
 </script>
 
 <style scoped>
@@ -184,13 +163,18 @@ export default {
 }
 
 .tabs .tab {
+    cursor: pointer;
     text-decoration: none;
     color: #FFFFFFB2;
     font-size: 25px;
     font-weight: 600;
     line-height: 46.85px;
+    transition: 0.5s;
 }
-
+.tabs .tab:hover{
+    scale: 1.1;
+    color: orangered;
+}
 .box {
     height: 178px;
     border-radius: 10px;
@@ -219,5 +203,19 @@ export default {
     height: 188px;
     border-radius: 10px;
     background: #0378AE;
+}
+@media(max-width:440px){
+   .tab{
+    font-size: 20px !important;
+   }
+}
+@media (max-width:365px) {
+   .tabs{
+    flex-wrap: wrap;
+   }
+   .tab.last_tab{
+    margin-right: 40px !important;
+   }
+    
 }
 </style>

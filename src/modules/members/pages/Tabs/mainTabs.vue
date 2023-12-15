@@ -160,11 +160,9 @@ export default {
     // tabsAuth.authRedirect();
     if(localStorage.getItem('id')){
             setTimeout(() => {
-            sendFile.getOneProject(`https://test.m-aboelela.online/api/user/projects/show/${route.params.id}`)    
-
-        }, 10);
+            sendFile.getOneProject(`https://test.m-aboelela.online/api/user/projects/show/${route.params.id}`);
+        }, 100);
         userId.value = localStorage.getItem('id');
-
         }
     });
     return {

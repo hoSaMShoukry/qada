@@ -36,16 +36,14 @@
             
             <button v-if="x.matches" :class="auth != '' ? 'd-none' : ''"  @click="router.push('/loginPanal')" type="button" class="btn ms-2  create">إنشاء حساب</button>
                      
-            <router-link :class="auth !=''? '' : 'd-none'" to="/loginPanal">
-              <button @click="logout" class="btn   create">تسجيل الخروج</button>
-            </router-link>
+              <button @click="logout()" class="btn create" :class="auth !=''? '' : 'd-none'">تسجيل الخروج</button>
             
             <div class="dropdown" v-if="auth">
-              <button class="bg-transparent border-0" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <button @click="getAllProjects.hideProjects()" class="bg-transparent border-0" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <li class="nav-item res-li mx-lg-5 ms-5 position-relative mt-2 pl-5">
               <i class="fa-regular fa-bell"></i>
-              <span class="position-absolute unread top-0 start-lg-100  badge rounded-pill bg-danger text-light">
-                   {{ getAllProjects.allprojects.length }}
+              <span v-if="getAllProjects.notificationsLength > 0" class="position-absolute unread top-0 start-lg-100  badge rounded-pill bg-danger text-light">
+                   {{ getAllProjects.notificationsLength }}
                 <span class="visually-hidden">unread messages</span>
               </span>
             </li>
@@ -143,7 +141,7 @@
            
     </div>
     
-        <div class="collapse navbar-collapse" id="navbarSupportedContent" style="z-index: 999;">
+        <div class="collapse navbar-collapse" id="navbarSupportedContent" style="z-index: 1000;">
           <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-lg-baseline ">
             <li class="nav-item mx-lg-2">
               <router-link class="nav-link qada" to="/member">ميدان<span>ى</span></router-link>
@@ -178,18 +176,18 @@
              
            
            
-              <router-link v-if="!x.matches" :class="auth !=''? '' : 'd-none'" to="/loginPanal">
-                          <button @click="logout" class="btn   create">تسجيل الخروج</button>
+              <router-link @click="logout()" v-if="!x.matches" :class="auth !=''? '' : 'd-none'" to="/loginPanal">
+                          <button class="btn create">تسجيل الخروج</button>
                </router-link>
            
             
  <div class="dropdown" v-if="auth">
-              <button class="bg-transparent border-0" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <button @click="getAllProjects.hideProjects()" class="bg-transparent border-0" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               <li v-if="!x.matches" class="nav-item mx-lg-5 position-relative">
               <i class="fa-regular fa-bell"></i>
-              <span class="position-absolute unread top-0 start-lg-100  badge rounded-pill bg-danger text-light">
+              <span v-if="getAllProjects.notificationsLength > 0" class="position-absolute unread top-0 start-lg-100  badge rounded-pill bg-danger text-light">
 
-                {{ getAllProjects.allprojects.length}}
+                {{ getAllProjects.notificationsLength}}
                 <span class="visually-hidden">unread messages</span>
               </span>
             </li>
@@ -297,7 +295,7 @@ import router from '@/router';
 import { onMounted, ref } from 'vue';
 import { notify } from '@/stores/notifications';
 const myrefusedProject = ref({});
-const getAllProjects = notify()
+const getAllProjects = notify();
 const refuseReasone = (refusedProject)=>{
   myrefusedProject.value = refusedProject;
 console.log(myrefusedProject.value);
@@ -305,13 +303,25 @@ console.log(myrefusedProject.value);
 const x = ref(window.matchMedia("(max-width:991px)"));
 const auth = ref(null)
 const logout = ()=> {
-    localStorage.clear();
-    router.push('home')
+  if(localStorage.getItem(`notifications${getAllProjects.userId}`) ||  localStorage.getItem(`office_notifications${getAllProjects.userId}`)){
+    localStorage.removeItem('email');
+    localStorage.removeItem('name');
+    localStorage.removeItem('type');
+    localStorage.removeItem('token');
+    localStorage.removeItem('phone');
+    localStorage.removeItem('id');
+    router.push('/loginPanal')
+
+  }else{
+  localStorage.clear();
+  router.push('/loginPanal')
+  }
 }
-onMounted(() => {
-    let token = localStorage.getItem('token') ? localStorage.getItem('token') : ''
-   auth.value = token !='' ? token  : ''; 
-  getAllProjects.getAllProjects();
+onMounted(async() => {
+  await getAllProjects.getAllProjects();
+  let token = localStorage.getItem('token') ? localStorage.getItem('token') : ''
+  auth.value = token !='' ? token  : ''; 
+  
    
 });
 
@@ -417,44 +427,81 @@ li span {
         display: inline-block;
     }
 }
-@media (max-width:489px) {
-  .responsive-header{
-    position: relative;
-    display: grid !important;
-    grid-template-columns: auto auto;
-    min-height:15vh ;
-  }
-  .responsive-header .res-li{
-    position: absolute !important;
-     bottom: 0px;
-     left: 0px;
-  }
-  .navbar-toggler{
-    margin-bottom: 30px !important;
-  }
-  
-}
 @media (max-width:500px) {
   #navbarSupportedContent{
       position: relative;
       top: -80px;
+      right: -20px !important;
        
       }
+      .create {
+        margin-left: 50px !important;
+      }
   .responsive-header{
+    display: flex;
     position: absolute;
     top: 0px;
-    left: 0px;
-    display: grid !important;
-    grid-template-columns: auto;
+    left: -40px;
+    justify-content: end !important;
+    flex-wrap: nowrap;
     min-height: 100px;
+
   }
 .responsive-header .res-li{
   position: relative;
-  top: 10px !important;
+  left: 20px !important;
+
 }
   .navbar-toggler{
     margin-bottom: 100px !important;
   }
   
+.notify-menu{
+  position: absolute !important;
+  top:70px !important;
+  left: 40px !important;
+  
+}
+}
+@media (max-width:401px) {
+  .login , .create{
+    width: fit-content !important;
+    height: 40px !important;
+    font-size: 15px !important;
+  }
+  .login{
+    margin-top: 10px !important;
+  }
+  
+}
+@media (max-width:331px) {
+  .notify-menu{
+max-width: 97vw;
+  }
+  
+}
+@media (max-width:315px) {
+  .create {
+     width: 100px !important;
+     height: 40px !important;
+     font-size: 13px !important; 
+  }
+  .login{
+    width: 115px !important;
+    height: 40px !important;
+     font-size: 13px !important;
+  }
+  
+}
+@media (max-width:302px) {
+  .create {
+     width: 95px !important;
+     height: 40px !important;
+      
+  }
+  .login{
+    width: 105px !important;
+    height: 40px !important;
+  }
 }
 </style>

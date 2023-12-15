@@ -1,26 +1,39 @@
 <template>
-  <div>
-    <MemberHeader />
-          <div class="row" style="position: relative;top: -30px;max-width: 100%;overflow-x: hidden;">
-            <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-12">
-              <div class="sideCard" v-motion-roll-top style="transition: 1s;">
+          <div>
+            <MemberHeader />
+          <div class="row" style="position: relative;top: -60px;max-width: 100%;overflow-x: hidden;">
+            <!--
+  <div class="col-xl-1 col-lg-1 col-md-1 col-sm-1 col-1">
+              <div id="sidebar" class="sideCard" style="transition: 1s;">
                     <ul>
-                        <li class="text-light">مرحبا</li>
+                      <span @click="show_sidebar()" class="icon"><i class="fa-solid fa-gear"></i></span>
+                      <li class="text-light">مرحبا</li>
                         <li class="authName">{{ personName }}</li>
                         <li class="mt-4" @click="showComponent = 'مشاريعى'" :style="{'cursor': 'pointer' , 'textDecoration' : showComponent == 'مشاريعى' ? 'underline' : ''}">مشاريعى</li>
                         <li class="mt-4" @click="showComponent = 'اضافة مشروع'" :style="{'cursor': 'pointer' , 'textDecoration' : showComponent == 'اضافة مشروع' ? 'underline' : ''}">اضافة مشروع</li>
-                        <!--التوجه لصفحة حسابى
-                        to="usersStats"
-                        -->
                         <li @click="showComponent = 'حسابى'" class="mt-4 sidbarLink" :style="{'cursor': 'pointer' , 'textDecoration' : showComponent == 'حسابى' ? 'underline' : ''}">حسابى</li>
                         <li class="mt-4 sidbarLink" @click="showComponent = 'المراسلات'" :style="{'cursor': 'pointer' , 'textDecoration' : showComponent == 'المراسلات' ? 'underline' : ''}">المراسلات</li>
                         <li @click="logOut" class="mt-4"><router-link class="sidbarLink" to="">تسجيل خروج</router-link></li>
                     </ul>
                     </div>
             </div>
+            -->
+          
            
             <!--container-->
-            <div class="col-xl-10 col-lg-10 col-md-10 col-sm-12 col-12 container">
+            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 container mt-5 pt-5">
+              <div id="sidebar" class="sideCard" style="transition: 1s;">
+                    <ul>
+                      <span @click="show_sidebar()" class="icon"><i class="fa-solid fa-gear"></i></span>
+                      <li class="text-light">مرحبا</li>
+                        <li class="authName">{{ personName }}</li>
+                        <li class="mt-4" @click="showComponent = 'مشاريعى'" :style="{'cursor': 'pointer' , 'textDecoration' : showComponent == 'مشاريعى' ? 'underline' : ''}">مشاريعى</li>
+                        <li class="mt-4" @click="showComponent = 'اضافة مشروع'" :style="{'cursor': 'pointer' , 'textDecoration' : showComponent == 'اضافة مشروع' ? 'underline' : ''}">اضافة مشروع</li>
+                        <li @click="showComponent = 'حسابى'" class="mt-4 sidbarLink" :style="{'cursor': 'pointer' , 'textDecoration' : showComponent == 'حسابى' ? 'underline' : ''}">حسابى</li>
+                        <li class="mt-4 sidbarLink" @click="showComponent = 'المراسلات'" :style="{'cursor': 'pointer' , 'textDecoration' : showComponent == 'المراسلات' ? 'underline' : ''}">المراسلات</li>
+                        <li @click="logOut" class="mt-4"><router-link class="sidbarLink" to="">تسجيل خروج</router-link></li>
+                    </ul>
+                    </div>
               <MyProjects v-if="showComponent == 'مشاريعى'"/>
               <myAccountmember v-if="showComponent == 'حسابى'"/>
             <chatMember v-if="showComponent == 'المراسلات'"/>
@@ -235,7 +248,8 @@ import MemberHeader from "../components/MemberHeader.vue";
 import { getOptionsApi } from "@/stores/getApiOptions";
 import axios from "axios";
 import router from "@/router";
-
+import { notify } from '@/stores/notifications';
+import { redirectAuth } from '@/stores/redirectAuth/redirect';
 export default {
   components: {
     MyProjects,
@@ -246,6 +260,11 @@ export default {
   },
   setup() {
     let showComponent = ref('مشاريعى');
+    const notifications = notify();
+    const show_sidebar = ()=>{
+      document.querySelector('#sidebar').classList.toggle('gear');
+    }
+    const redirect = redirectAuth();
     const check_box_validation = (e)=>{
              e.target.checked == true 
             ? form.request_qty_tablesValidation = 'checked' 
@@ -255,8 +274,19 @@ export default {
      const getApiValues = getOptionsApi();
      const userId = ref(localStorage.getItem('id') ? localStorage.getItem('id') : '');
      const logOut = ()=>{
-      localStorage.clear();
-      router.push('/')
+      if(localStorage.getItem(`notifications${notifications.userId}`) ||  localStorage.getItem(`office_notifications${notifications.userId}`)){
+    localStorage.removeItem('email');
+    localStorage.removeItem('name');
+    localStorage.removeItem('type');
+    localStorage.removeItem('token');
+    localStorage.removeItem('phone');
+    localStorage.removeItem('id');
+    router.push('/loginPanal')
+
+  }else{
+  localStorage.clear();
+  router.push('/loginPanal')
+  }
      }
     const registerd = ref(null);
     const token = ref(null);
@@ -424,8 +454,10 @@ setTimeout(() => {
 */
 
     };
-    onMounted(() => {
+    onMounted(async() => {
+      await redirect.redirectToControlPanel();
       token.value = localStorage.getItem('token');
+      notifications.getAllProjects();
       getApiValues.getCities();
       getApiValues.getElectronicServices();
       getApiValues.setservice_category();
@@ -433,6 +465,9 @@ setTimeout(() => {
     });
     return {
       getApiValues,
+      show_sidebar,
+      notifications,
+      redirect,
       showComponent,
       check_box_validation,
       loading,
@@ -463,8 +498,22 @@ setTimeout(() => {
 }
 .sideCard {
     position: absolute;
-    top: -10px;
-    right: 0;
+    top: 0px;
+    right: -170px;
+    z-index: 1000;
+    background-color: #54847D;
+    color: #fff;
+    width: 170px;
+    height: 380px;
+    text-align: center;
+    border-radius: 22px 0 0 22px;
+    padding-top: 20px;
+    transition: 1s;
+}
+.sideCard.gear{
+  position: absolute;
+    top: 0px;
+    right: 0px;
     background-color: #54847D;
     color: #fff;
     width: 170px;
@@ -477,11 +526,30 @@ setTimeout(() => {
 .sideCard:hover{
 filter: brightness(1.3);
 }
-
 .sideCard li {
     list-style-type: none;
-}
 
+  }
+  .sideCard .icon{
+    cursor: pointer;
+  position: absolute;
+  left: -30px;
+  top: 40%;
+  font-size: 30px;
+  color: #0c483f;
+  animation-name: rotate;
+  animation-duration: 1s;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+}
+@keyframes rotate {
+  from{
+    transform: rotate(180deg);
+  }
+to{
+  transition: rotate(180deg);
+}
+}
 .sidbarLink {
     text-decoration: none;
     color: #FFFFFFB2;
@@ -659,9 +727,8 @@ select#floatingSelect {
 @media (max-width:768px) {
   .container{
     display: block !important;
-    margin-top: 60vh !important;
     min-width: 100% !important;
-  max-height: fit-content;
+    max-height: fit-content;
   }
 }
 @media (max-width:657px) {

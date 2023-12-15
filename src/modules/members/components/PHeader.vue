@@ -32,24 +32,24 @@
             
             <button :class="auth != '' ? 'd-none' : ''"  @click="$router.push('/loginPanal')" type="button" class="btn ms-2  create">إنشاء حساب</button>
                      
-            <router-link :class="auth !=''? '' : 'd-none'" to="/loginPanal">
-              <button @click="logout" class="btn   create">تسجيل الخروج</button>
+            <router-link @click="logout" :class="auth !=''? '' : 'd-none'" to="/loginPanal">
+              <button  class="btn   create">تسجيل الخروج</button>
             </router-link>
             
             <div class="dropdown" :class="!auth ? 'd-none' :''">
-              <button class="bg-transparent border-0" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <button @click="notifications.hideProjects()" class="bg-transparent border-0" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <li class="nav-item res-li mx-lg-5 ms-5 position-relative mt-2 pl-5">
               <i class="fa-regular fa-bell"></i>
-              <span class="position-absolute unread top-0 start-lg-100  badge rounded-pill bg-danger text-light">
-                {{ acceptedProjects.length + rejectedProjects.length + underVisionProjects.length }}
+              <span v-if="notifications.notificationsLength > 0" class="position-absolute unread top-0 start-lg-100  badge rounded-pill bg-danger text-light">
+                {{ notifications.allprojects.length }}
 
                 <span class="visually-hidden">unread messages</span>
               </span>
             </li>
   </button>
   <div style="width: 310px; height:360px;overflow-y:auto ;transition: ; background-color: #248a23;padding-right: 10px;" class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-  <div v-for="project in acceptedProjects" :key="project" class="accepted d-flex mt-1">
-    <div class="svg ms-2" v-if="acceptedProjects.length > 0">
+  <div v-for="project in notifications.accepted" :key="project" class="accepted d-flex mt-1">
+    <div class="svg ms-2" v-if="notifications.accepted.length > 0">
       <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
 <g clip-path="url(#clip0_344_8289)">
 <path d="M14.9997 0C6.72848 0 0 6.729 0 15C0 23.271 6.72848 30 14.9997 30C23.2709 30 30 23.271 30 15C30 6.729 23.2709 0 14.9997 0ZM14.9997 28.0328C7.8135 28.0328 1.96725 22.1862 1.96725 15C1.96725 7.81372 7.81343 1.96733 14.9997 1.96733C22.186 1.96733 28.0325 7.8138 28.0325 15C28.0326 22.1862 22.1859 28.0328 14.9997 28.0328Z" fill="url(#paint0_linear_344_8289)"/>
@@ -71,7 +71,7 @@
 </svg>
 
     </div>
-    <div v-if="acceptedProjects.length > 0" class="info">
+    <div v-if="notifications.accepted.length > 0" class="info">
       <span class="text-white" style="font-size: small;">
       تم الموافقة على  {{ project.project_title }}
       </span>
@@ -79,8 +79,8 @@
 
   </div>
   <!--rejected projects-->
-  <div class="rejected-projects d-flex mt-1" v-for="project in rejectedProjects" :key="project" @click="refuseReasone(project)" type="button" data-toggle="modal" data-target="#exampleModal">
-  <div v-if="rejectedProjects.length > 0" class="svg ms-2">
+  <div class="rejected-projects d-flex mt-1" v-for="project in notifications.rejected" :key="project" @click="refuseReasone(project)" type="button" data-toggle="modal" data-target="#exampleModal">
+  <div v-if="notifications.rejected.length > 0" class="svg ms-2">
     <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
 <g clip-path="url(#clip0_344_8376)">
 <path d="M14.9997 0C6.72848 0 0 6.729 0 15C0 23.271 6.72848 30 14.9997 30C23.2709 30 30 23.271 30 15C30 6.729 23.2709 0 14.9997 0ZM14.9997 28.0328C7.8135 28.0328 1.96725 22.1862 1.96725 15C1.96725 7.81372 7.81343 1.96733 14.9997 1.96733C22.186 1.96733 28.0325 7.8138 28.0325 15C28.0326 22.1862 22.1859 28.0328 14.9997 28.0328Z" fill="url(#paint0_linear_344_8376)"/>
@@ -97,7 +97,7 @@
 </defs>
 </svg>
   </div>
- <div v-if="rejectedProjects.length > 0" class="info">
+ <div v-if="notifications.rejected.length > 0" class="info">
       <span class="text-white" style="font-size: small;">
       تم رفض مشروع  {{ project.project_title }}
       </span>
@@ -105,8 +105,8 @@
   </div>
 <!--end rejected projects-->
 <!--accepted projects-->
- <div v-for="project in underVisionProjects" :key="project" class="accepted d-flex mt-1">
-    <div class="svg ms-2" v-if="acceptedProjects.length > 0">
+ <div v-for="project in notifications.underVision" :key="project" class="accepted d-flex mt-1">
+    <div class="svg ms-2" v-if="notifications.accepted.length > 0">
       <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
 <g clip-path="url(#clip0_344_8289)">
 <path d="M14.9997 0C6.72848 0 0 6.729 0 15C0 23.271 6.72848 30 14.9997 30C23.2709 30 30 23.271 30 15C30 6.729 23.2709 0 14.9997 0ZM14.9997 28.0328C7.8135 28.0328 1.96725 22.1862 1.96725 15C1.96725 7.81372 7.81343 1.96733 14.9997 1.96733C22.186 1.96733 28.0325 7.8138 28.0325 15C28.0326 22.1862 22.1859 28.0328 14.9997 28.0328Z" fill="url(#paint0_linear_344_8289)"/>
@@ -128,7 +128,7 @@
 </svg>
 
     </div>
-    <div v-if="acceptedProjects.length > 0" class="info">
+    <div v-if="notifications.accepted.length > 0" class="info">
       <span class="text-white" style="font-size: small;">
       تم طرح مشروع  {{ project.project_title }}
       </span>
@@ -173,22 +173,21 @@
                             <button class="btn   create">إنشاء حساب</button>
                         </router-link>
                         <router-link v-if="!x.matches" @click="logout" :class="auth !=''? '' : 'd-none'" to="/loginPanal">
-                            <button @click="logout" class="btn   create">تسجيل الخروج</button>
+                            <button class="btn   create">تسجيل الخروج</button>
                         </router-link>
                         <div class="dropdown" v-if="!x.matches" :class="!auth ? 'd-none' :''">
-              <button class="bg-transparent border-0" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <button @click="notifications.hideProjects()" class="bg-transparent border-0" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <li class="nav-item res-li mx-lg-5 ms-5 position-relative mt-2 pl-5">
               <i class="fa-regular fa-bell"></i>
-              <span class="position-absolute unread top-0 start-lg-100  badge rounded-pill bg-danger text-light">
-                {{ acceptedProjects.length + rejectedProjects.length + underVisionProjects.length }}
-
+              <span v-if="notifications.notificationsLength > 0" class="position-absolute unread top-0 start-lg-100  badge rounded-pill bg-danger text-light">
+                {{ notifications.allprojects.length }}
                 <span class="visually-hidden">unread messages</span>
               </span>
             </li>
   </button>
   <div style="width: 310px; height:360px;overflow-y:auto ; background-color: #248a23;padding-right: 10px;" class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-  <div v-for="project in acceptedProjects" :key="project" class="accepted d-flex mt-1">
-    <div class="svg ms-2" v-if="acceptedProjects.length > 0">
+  <div v-for="project in notifications.accepted" :key="project" class="accepted d-flex mt-1">
+    <div class="svg ms-2" v-if="notifications.accepted.length > 0">
       <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
 <g clip-path="url(#clip0_344_8289)">
 <path d="M14.9997 0C6.72848 0 0 6.729 0 15C0 23.271 6.72848 30 14.9997 30C23.2709 30 30 23.271 30 15C30 6.729 23.2709 0 14.9997 0ZM14.9997 28.0328C7.8135 28.0328 1.96725 22.1862 1.96725 15C1.96725 7.81372 7.81343 1.96733 14.9997 1.96733C22.186 1.96733 28.0325 7.8138 28.0325 15C28.0326 22.1862 22.1859 28.0328 14.9997 28.0328Z" fill="url(#paint0_linear_344_8289)"/>
@@ -210,7 +209,7 @@
 </svg>
 
     </div>
-    <div v-if="acceptedProjects.length > 0" class="info">
+    <div v-if="notifications.accepted.length > 0" class="info">
       <span class="text-white" style="font-size: small;">
       تم الموافقة على  {{ project.project_title }}
       </span>
@@ -218,8 +217,8 @@
 
   </div>
   <!--rejected projects-->
-  <div class="rejected-projects d-flex mt-1" v-for="project in rejectedProjects" :key="project" @click="refuseReasone(project)" type="button" data-toggle="modal" data-target="#exampleModal">
-  <div v-if="rejectedProjects.length > 0" class="svg ms-2">
+  <div class="rejected-projects d-flex mt-1" v-for="project in notifications.rejected" :key="project" @click="refuseReasone(project)" type="button" data-toggle="modal" data-target="#exampleModal">
+  <div v-if="notifications.rejected.length > 0" class="svg ms-2">
     <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
 <g clip-path="url(#clip0_344_8376)">
 <path d="M14.9997 0C6.72848 0 0 6.729 0 15C0 23.271 6.72848 30 14.9997 30C23.2709 30 30 23.271 30 15C30 6.729 23.2709 0 14.9997 0ZM14.9997 28.0328C7.8135 28.0328 1.96725 22.1862 1.96725 15C1.96725 7.81372 7.81343 1.96733 14.9997 1.96733C22.186 1.96733 28.0325 7.8138 28.0325 15C28.0326 22.1862 22.1859 28.0328 14.9997 28.0328Z" fill="url(#paint0_linear_344_8376)"/>
@@ -236,7 +235,7 @@
 </defs>
 </svg>
   </div>
- <div v-if="rejectedProjects.length > 0" class="info">
+ <div v-if="notifications.rejected.length > 0" class="info">
       <span class="text-white" style="font-size: small;">
       تم رفض مشروع  {{ project.project_title }}
       </span>
@@ -244,8 +243,8 @@
   </div>
 <!--end rejected projects-->
 <!--accepted projects-->
- <div v-for="project in underVisionProjects" :key="project" class="accepted d-flex mt-1">
-    <div class="svg ms-2" v-if="acceptedProjects.length > 0">
+ <div v-for="project in notifications.underVision" :key="project" class="accepted d-flex mt-1">
+    <div class="svg ms-2" v-if="notifications.accepted.length > 0">
       <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
 <g clip-path="url(#clip0_344_8289)">
 <path d="M14.9997 0C6.72848 0 0 6.729 0 15C0 23.271 6.72848 30 14.9997 30C23.2709 30 30 23.271 30 15C30 6.729 23.2709 0 14.9997 0ZM14.9997 28.0328C7.8135 28.0328 1.96725 22.1862 1.96725 15C1.96725 7.81372 7.81343 1.96733 14.9997 1.96733C22.186 1.96733 28.0325 7.8138 28.0325 15C28.0326 22.1862 22.1859 28.0328 14.9997 28.0328Z" fill="url(#paint0_linear_344_8289)"/>
@@ -267,7 +266,7 @@
 </svg>
 
     </div>
-    <div v-if="acceptedProjects.length > 0" class="info">
+    <div v-if="notifications.accepted.length > 0" class="info">
       <span class="text-white" style="font-size: small;">
       تم طرح مشروع  {{ project.project_title }}
       </span>
@@ -287,13 +286,11 @@
 <script>
 import router from '@/router';
 import { onBeforeMount, ref } from 'vue';
+import { notify } from '@/stores/notifications';
 export default {
     setup(){
         const x = ref(window.matchMedia("(max-width:991px)"));
-        const allProjects = ref([]);
-        const underVisionProjects = ref([]);
-        const rejectedProjects = ref([]);
-        const acceptedProjects = ref([]);
+        const notifications = notify();
         const myrefusedProject = ref({});
 const refuseReasone = (refusedProject)=>{
   myrefusedProject.value = refusedProject;
@@ -301,33 +298,34 @@ console.log(myrefusedProject.value);
 }
         const auth = ref(null);
         const logout = ()=> {
-        localStorage.clear();
-        router.push('/')
+          if(localStorage.getItem(`notifications${notifications.userId}`) ||  localStorage.getItem(`office_notifications${notifications.userId}`)){
+    localStorage.removeItem('email');
+    localStorage.removeItem('name');
+    localStorage.removeItem('type');
+    localStorage.removeItem('token');
+    localStorage.removeItem('phone');
+    localStorage.removeItem('id');
+    router.push('/loginPanal')
+
+  }else{
+  localStorage.clear();
+  router.push('/loginPanal')
+  }
 }
 onBeforeMount(() => {
 let token = localStorage.getItem('token') ? localStorage.getItem('token') : ''
 auth.value = token !='' ? token  : ''; 
-setTimeout(() => {
-   allProjects.value = JSON.parse(sessionStorage.getItem('allProjects'));
-   acceptedProjects.value = JSON.parse(sessionStorage.getItem('acceptedProjects'));
-   underVisionProjects.value = JSON.parse(sessionStorage.getItem('underVisionProjects'));
-   rejectedProjects.value = JSON.parse(sessionStorage.getItem('rejectedProjects'));
-   console.log(allProjects.value);
-   console.log(underVisionProjects.value);
-   console.log(rejectedProjects.value); 
-   }, 100);  
+ notifications.getAllProjects();
 });
 
         return{
             logout,
             refuseReasone,
             myrefusedProject,
+            notifications,
             x,
             auth,
-            allProjects,
-            acceptedProjects,
-            rejectedProjects,
-            underVisionProjects
+        
         }
     }
 }
@@ -409,14 +407,23 @@ li span {
     }
 }
 @media (max-width:500px) {
+  #navbarSupportedContent{
+      position: relative;
+      top: -80px;
+      right: -20px !important;
+      }
     .responsive-header{
+      display: flex;
     position: absolute;
-    top: 10px;
-    left: 10px;
-    display: grid !important;
-    grid-template-columns: auto;
+    top: 0px;
+    left: -40px;
+    justify-content: end !important;
+    flex-wrap: nowrap;
     min-height: 100px;
   }
+  .create {
+        margin-left: 50px !important;
+      }
 .responsive-header .res-li{
   position: relative;
   top: 10px !important;
@@ -426,6 +433,39 @@ li span {
     margin-bottom: 100px !important;
   }
   
+}
+@media (max-width:401px) {
+  .login , .create{
+    width: fit-content !important;
+  }
+  .login{
+    margin-top: 10px !important;
+  }
+  
+}
+@media (max-width:315px) {
+  .create {
+     width: 100px !important;
+     height: 40px !important;
+     font-size: 13px !important;    
+  }
+  .login{
+    width: 115px !important;
+    height: 40px !important;
+     font-size: 13px !important;    
+  }
+  
+}
+@media (max-width:302px) {
+  .create {
+     width: 95px !important;
+     height: 40px !important;
+      
+  }
+  .login{
+    width: 105px !important;
+    height: 40px !important;
+  }
 }
 .FadeIn{
   animation: fadeIn 1s;

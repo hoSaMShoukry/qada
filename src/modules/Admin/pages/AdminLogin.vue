@@ -126,4 +126,16 @@ input {
 hr {
     border: 1px solid rgba(53, 53, 53, 0.7);
 }
+@media (max-width:600px) {
+    form{
+       width: 100% !important;
+    }
+    
+}
+@media (max-width:500px) {
+ 
+ .header p{
+   font-size: 2.5rem !important;
+ }
+}
 </style>

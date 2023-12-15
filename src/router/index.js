@@ -106,6 +106,9 @@ import BusinessComponent from "../modules/Admin/business/BusinessComponent.vue";
 import chatOffice from "../modules/Engineering_offices/Pages/chatOffice.vue"
 import HomePageforOffice from '@/modules/Engineering_offices/Pages/HomePageforOffice'
 import reciveContacts from '@/modules/Admin/pages/receiveContacts.vue';
+/***error page */
+import errorPageVue from "@/components/errorPage.vue";
+
 
 
 
@@ -444,6 +447,11 @@ const routes = [
   {
     path: "/UserAccountDashboard",
     component: UserAccountDashboard,
+  },
+  {
+    path: "/:catchAll(.*)",
+    name: "error",
+    component: errorPageVue,
   },
 ];
 

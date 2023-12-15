@@ -26,12 +26,15 @@
           <div class=" ">
             <p class="me-3">{{ stage.title }}</p>
           </div>
-          <div class="text-center ">
+          <!--
+               <div class="text-center">
             <button class="first-stage mx-2" @click="showModal" :class="!auth ? 'd-none' : ''">طلب تعديل</button>
             <modal-component v-if="isModalVisible" @close="closeModal"></modal-component>
 
             <button class="recieve-stage mx-2" :class="!auth ? 'd-none' : ''">استلام المرحلة</button>
           </div>
+          -->
+       
         </div>
         <div class="seperator"></div>
         <div class="d-flex justify-content-between align-items-baseline my-2 lastCard">
@@ -42,7 +45,9 @@
           </div>
           <div class="button-stage text-center">
             <button class=" request-start-working mx-2" :class="!auth ? 'd-none' : ''">طلب بدءالاعمال</button>
+            <!--
             <button class="edit-button mx-2" :class="!auth ? 'd-none' : ''">توقيع غرامة تأخير</button>
+            -->
           </div>
         </div>
       </div>

@@ -150,7 +150,10 @@ onMounted(() => {
 * {
   direction: rtl;
 }
-
+.container{
+  min-height: 70vh;
+  padding-top: 10vh;
+}
 .header {
   text-align: center;
   justify-content: center;
@@ -198,5 +201,11 @@ input {
 
 hr {
   border: 1px solid rgba(53, 53, 53, 0.7);
+}
+@media (max-width:500px) {
+ 
+ .header p{
+   font-size: 2.5rem !important;
+ }
 }
 </style>

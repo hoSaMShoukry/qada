@@ -250,8 +250,18 @@ hr {
 }
 @media (max-width:362px) {
     .checkbox-label{
-        font-size: 80%;
+    width: 100vw;
+    display: flex;
+    justify-content: flex-start;
     }
     
+    
+}
+@media (max-width:321px) {
+  .checkbox-label , .btn{
+    position: relative;
+    left: 20px !important;
+  }
+  
 }
 </style>

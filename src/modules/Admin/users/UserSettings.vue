@@ -1,49 +1,32 @@
 <template >
     <div class="nada">
-        <AdminHeader />
-
-        <div class="container">
+        <div class="all">
             <div class="row">
-                <div class="col-lg-2 sideCard">
-                    <ul>
-                        <li class="text-light">مرحبا</li>
-                        <li class="authName">عبدالعزيز</li>
-                        <li class="mt-4"><router-link class="sidbarLink" to="homepage">الرئيسية</router-link></li>
-                        <li class="mt-4"><router-link class="sidbarLink" to="usersStats">الاحصائيات</router-link></li>
-                        <li class="mt-4"><router-link class="sidbarLink" to="useraccount">الفريق</router-link></li>
-                        <li class="mt-4"><router-link class="sidbarLink" to="addedProjects">المشاريع</router-link></li>
-                        <li class="mt-4"><router-link class="sidbarLink" to="">تسجيل خروج</router-link></li>
-                    </ul>
-                </div>
-                <div class="col-lg-9">
-                    <ul class="d-flex ">
-                        <li class="mx-5 "><router-link class="text-light text-decoration-none" to="useraccount">الملف الشخصي</router-link></li>
-                        <li><router-link to="usersettings" class="secondLink">الاعدادات</router-link></li>
-                    </ul>
+                <div class="col-lg-12">
                     <form @submit.prevent="login" class="p-5">
                         <div class="">
-                            <div class="row formContainer col-lg-10 m-auto py-5">
-                                <div class="col-lg-7 m-auto ">
+                            <div class="row formContainer m-auto py-5 rounded-5 w-75">
+                                <div class="col-xl-7 col-lg-7 col-md-10 col-sm-10 col-12 m-auto ">
                                     <i class="fa-solid fa-user mx-2 text"></i>
                                     <label class="text" for="email">اسم العميل</label>
                                     <input class="form-control mt-2  " v-model.trim="name" />
                                 </div>
-                                <div class="col-lg-7 m-auto">
+                                <div class="col-xl-7 col-lg-7 col-md-10 col-sm-10 col-12 m-auto">
                                     <i class="fa-solid fa-envelope mx-2 text"></i>
                                     <label class="text" for="email">البريد الإلكتروني</label>
                                     <input class="form-control mt-2 " v-model.trim="name" />
                                 </div>
-                                <div class="col-lg-7 m-auto">
+                                <div class="col-xl-7 col-lg-7 col-md-10 col-sm-10 col-12 m-auto">
                                     <i class="fa-solid fa-phone mx-2 text"></i>
                                     <label class="text" for="email">رقم الهاتف</label>
                                     <input class="form-control mt-2 " v-model.trim="name" />
                                 </div>
-                                <div class="col-lg-7 m-auto ">
+                                <div class="col-xl-7 col-lg-7 col-md-10 col-sm-10 col-12 m-auto ">
                                     <i class="fa-solid fa-lock mx-2 text"></i>
                                     <label class="text" for="email">كلمة المرور الجديدة</label>
                                     <input class="form-control mt-2 " v-model.trim="name" />
                                 </div>
-                                <div class="col-lg-7 m-auto">
+                                <div class="col-xl-7 col-lg-7 col-md-10 col-sm-10 col-12 m-auto">
                                     <i class="fa-solid fa-lock mx-2 text"></i>
                                     <label class="text" for="email">تأكيد كلمة المرور</label>
                                     <input class="form-control mt-2 " v-model.trim="name" />
@@ -60,23 +43,8 @@
     </div>
 </template>
 
-<script>
-import { usebackgroundStore } from "../../../stores/background"
-import AdminHeader from "../pages/AdminHeader.vue"
-export default {
-    components: {
-        AdminHeader
-    },
-    data: () => ({
-        backgroundStore: usebackgroundStore()
-    }),
-    mounted() {
-        this.backgroundStore.setBgColor(1)
-    },
-    unmounted() {
-        this.backgroundStore.setBgColor(0)
-    }
-}
+<script setup>
+
 </script>
 
 <style scoped>
@@ -163,5 +131,11 @@ input {
     margin-bottom: 3rem;
     border-radius: 0.6rem;
     border: none;
+}
+@media (max-width:950px) {
+    .formContainer{
+        width: 100% !important;
+    }
+    
 }
 </style>

@@ -2,23 +2,38 @@
   <div>
   <BusinessHeader />
   <div class="row" style="position: relative;top: -30px;max-width: 100%;overflow-x: hidden;">
+    <!--
     <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-12">
-      <div class="sideCard"  v-motion-roll-top>
+      <div id="sidebar" class="sideCard"  v-motion-roll-top>
                     <ul>
+                      <span @click="show_sidebar()" class="icon"><i class="fa-solid fa-gear"></i></span>
                         <li class="text-light">مرحبا</li>
                         <li class="authName">{{ personName }}</li>
                         <li class="mt-4" @click="showComponent = 'مشاريعى'" style="cursor: pointer;">مشاريعى</li>
                         <li class="mt-4" @click="showComponent = 'اضافة مشروع'" style="cursor: pointer;">اضافة مشروع</li>
-                        <!--التوجه لصفحة حسابى
-                        to="usersStats"
-                        -->
+                      
                         <li style="cursor: pointer;" @click="showComponent = 'حسابى'" class="mt-4 sidbarLink">حسابى</li>
                         <li class="mt-4 sidbarLink" @click="showComponent = 'المراسلات'" style="cursor: pointer;">المراسلات</li>
                         <li @click="logOut" class="mt-4"><router-link class="sidbarLink" to="">تسجيل خروج</router-link></li>
                     </ul>
                     </div>
-            </div>
-    <div class="col-xl-10 col-lg-10 col-md-10 col-sm-12 col-12 container">
+            </div>   
+    -->
+      
+    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 container">
+      <div id="sidebar" class="sideCard"  v-motion-roll-top>
+                    <ul>
+                      <span @click="show_sidebar()" class="icon"><i class="fa-solid fa-gear"></i></span>
+                        <li class="text-light">مرحبا</li>
+                        <li class="authName">{{ personName }}</li>
+                        <li class="mt-4" @click="showComponent = 'مشاريعى'"     :style="{'cursor': 'pointer' , 'textDecoration' : showComponent == 'مشاريعى' ? 'underline' : ''}">مشاريعى</li>
+                        <li class="mt-4" @click="showComponent = 'اضافة مشروع'" :style="{'cursor': 'pointer' , 'textDecoration' : showComponent == 'اضافة مشروع' ? 'underline' : ''}">اضافة مشروع</li>
+                      
+                        <li @click="showComponent = 'حسابى'" class="mt-4 sidbarLink" :style="{'cursor': 'pointer' , 'textDecoration' : showComponent == 'حسابى' ? 'underline' : ''}">حسابى</li>
+                        <li class="mt-4 sidbarLink" @click="showComponent = 'المراسلات'" :style="{'cursor': 'pointer' , 'textDecoration' : showComponent == 'المراسلات' ? 'underline' : ''}">المراسلات</li>
+                        <li @click="logOut" class="mt-4"><router-link class="sidbarLink" to="">تسجيل خروج</router-link></li>
+                    </ul>
+                    </div>
     <myProjects v-if="showComponent == 'مشاريعى'"/>
     <ChatBusiness v-if="showComponent == 'المراسلات'"/>
     <MyAccountBusiness v-if="showComponent == 'حسابى'"/>
@@ -234,7 +249,8 @@ import { getOptionsApi } from "@/stores/getApiOptions";
 import router from '@/router';
 import ChatBusiness from './chatBusiness.vue';
 import MyAccountBusiness from './myAccountBusiness.vue';
-
+import { notify } from '@/stores/notifications';
+import { redirectAuth } from '@/stores/redirectAuth/redirect';
 export default {
   components: {
     BusinessHeader,
@@ -245,10 +261,25 @@ export default {
 },
   setup() {
     let showComponent = ref('مشاريعى');
+    const show_sidebar = ()=>{
+      document.querySelector('#sidebar').classList.toggle('gear');
+    }
     const getApiValues = getOptionsApi();
+    const notifications = notify();
     const logOut = ()=>{
-      localStorage.clear();
-      router.push('/')
+      if(localStorage.getItem(`notifications${notifications.userId}`) ||  localStorage.getItem(`office_notifications${notifications.userId}`)){
+    localStorage.removeItem('email');
+    localStorage.removeItem('name');
+    localStorage.removeItem('type');
+    localStorage.removeItem('token');
+    localStorage.removeItem('phone');
+    localStorage.removeItem('id');
+    router.push('/loginPanal')
+
+  }else{
+  localStorage.clear();
+  router.push('/loginPanal')
+  }
     };
     const registerd = ref(null);
     const token = ref(null);
@@ -309,6 +340,7 @@ export default {
   localStorage.getItem('email').slice(0,localStorage.getItem('email').indexOf('@'))
    : ''
   );
+    const redirect = redirectAuth()
     const loading = ref(false);
     const add_project = addProjectMember();
     const addproject = async() => {
@@ -371,7 +403,8 @@ registerd.value = ''
       }
      
     }
-    onMounted(() => {
+    onMounted(async() => {
+     await redirect.redirectToControlPanel();
       token.value = localStorage.getItem('token');
       getApiValues.getCities();
       getApiValues.getElectronicServices();
@@ -382,6 +415,8 @@ registerd.value = ''
     })
     return {
       getApiValues,
+      show_sidebar,
+      redirect,
       showComponent,
       personName,
       registerd,
@@ -407,8 +442,42 @@ registerd.value = ''
 
 .sideCard {
     position: absolute;
-    top: -10px;
-    right: 0;
+    top: 0px;
+    right: -170px;
+    z-index: 1000;
+    background-color: #54847D;
+    color: #fff;
+    width: 170px;
+    height: 380px;
+    text-align: center;
+    border-radius: 22px 0 0 22px;
+    padding-top: 20px;
+    transition: 1s;
+}
+.sideCard .icon{
+    cursor: pointer;
+  position: absolute;
+  left: -30px;
+  top: 40%;
+  font-size: 30px;
+  color: #0c483f;
+  animation-name: rotate;
+  animation-duration: 1s;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+}
+@keyframes rotate {
+  from{
+    transform: rotate(180deg);
+  }
+to{
+  transition: rotate(180deg);
+}
+}
+.sideCard.gear{
+  position: absolute;
+    top: 0px;
+    right: 0px;
     background-color: #54847D;
     color: #fff;
     width: 170px;
@@ -584,7 +653,6 @@ select#floatingSelect {
 @media (max-width:768px) {
   .container{
     display: block !important;
-    margin-top: 60vh !important;
 
   }
   

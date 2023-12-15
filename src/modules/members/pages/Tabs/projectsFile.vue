@@ -73,7 +73,7 @@
                                     fill="#2A665D" />
                             </svg>
                         </span>
-                        {{ file.file }}
+                        {{ file.file.slice(0,6) }}
                     </div>
                 </div>
                 <div class="col-3 content-text" style="direction: ltr;">

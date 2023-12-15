@@ -12,7 +12,7 @@
         المراحل المستلمة
       </div>
 
-      <div class="card col-lg-6 col-sm-12 my-5 ">
+      <div class="card col-lg-6 col-sm-12 my-5 " v-for="stage in stages" :key="stage">
         <div class="d-flex justify-content-between align-items-baseline mt-2 ">
           <span class="first-svg">
             <svg xmlns="http://www.w3.org/2000/svg" width="30" height="31" viewBox="0 0 30 31" fill="none">
@@ -21,121 +21,36 @@
             </svg>
           </span>
           <div class=" ">
-            <p class="me-3 first-stage-text">المرحلةالاولي</p>
+            <p class="me-3">{{ stage.title }}</p>
           </div>
-          <div class=" ">
+          <!--
+<div class=" ">
             <button class="first-stage mx-2" @click="showModal">طلب تعديل</button>
             <modal-component v-if="isModalVisible" @close="closeModal"></modal-component>
 
             <button class="recieve-stage mx-2">استلام المرحلة</button>
           </div>
+          -->
+          
         </div>
         <div class="seperator"></div>
         <div class="d-flex justify-content-between align-items-baseline my-2 lastCard">
           <div class="span-stage">
             <span>عدد التعديلات: <span class="numbers"> 2/5 </span></span>
             <span class="fasel"> | </span>
-            <span>عدد ايام المرحلة: <span class="numbers"> (10) يوم </span></span>
+            <span>عدد ايام المرحلة: <span class="numbers"> ({{ stage.duration }}) يوم </span></span>
           </div>
           <div class="button-stage">
             <button class=" request-start-working mx-2">طلب بدءالاعمال</button>
+            <!--
             <button class="edit-button mx-2">إضافة امر تغيير</button>
+
+            -->
           </div>
         </div>
       </div>
-
-      <div class="card col-lg-6 col-sm-12 my-5 ">
-          <div class="d-flex justify-content-between align-items-baseline mt-2 ">
-            <span class="first-svg">
-              <svg xmlns="http://www.w3.org/2000/svg" width="30" height="31" viewBox="0 0 30 31" fill="none">
-                <circle cx="15" cy="15.7217" r="15" fill="#FF5555" />
-                <text x="50%" y="50%" text-anchor="middle" dy=".3em" font-size="16" fill="white">5</text>
-              </svg>
-            </span>
-            <div class=" ">
-              <p class="me-3">المرحلةالاولي</p>
-            </div>
-            <div class=" ">
-              <button class="first-stage mx-2">طلب تعديل</button>
-              <button class="recieve-stage mx-2">استلام المرحلة</button>
-            </div>
-          </div>
-          <div class="seperator"></div>
-          <div class="d-flex justify-content-between align-items-baseline my-2 lastCard">
-            <div class="span-stage">
-              <span>عدد التعديلات: <span class="numbers"> 2/5 </span></span>
-              <span class="fasel"> | </span>
-              <span>عدد ايام المرحلة: <span class="numbers"> (10) يوم </span></span>
-            </div>
-            <div class="button-stage">
-              <button class=" request-start-working mx-2">طلب بدءالاعمال</button>
-              <button class="edit-button mx-2">توقيع غرامة تأخير</button>
-            </div>
-          </div>
-        </div>
-
-        <div class="card col-lg-6 col-sm-12 my-5 ">
-          <div class="d-flex justify-content-between align-items-baseline mt-2 ">
-            <span class="first-svg">
-              <svg xmlns="http://www.w3.org/2000/svg" width="30" height="31" viewBox="0 0 30 31" fill="none">
-                <circle cx="15" cy="15.7217" r="15" fill="#FF5555" />
-                <text x="50%" y="50%" text-anchor="middle" dy=".3em" font-size="16" fill="white">5</text>
-              </svg>
-            </span>
-            <div class=" ">
-              <p class="me-3">المرحلةالاولي</p>
-            </div>
-            <div class=" ">
-              <button class="first-stage mx-2">طلب تعديل</button>
-              <button class="recieve-stage mx-2">استلام المرحلة</button>
-            </div>
-          </div>
-          <div class="seperator"></div>
-          <div class="d-flex justify-content-between align-items-baseline my-2 lastCard">
-            <div class="span-stage">
-              <span>عدد التعديلات: <span class="numbers"> 2/5 </span></span>
-              <span class="fasel"> | </span>
-              <span>عدد ايام المرحلة: <span class="numbers"> (10) يوم </span></span>
-            </div>
-            <div class="button-stage">
-              <button class=" request-start-working mx-2">طلب بدءالاعمال</button>
-              <button class="edit-button mx-2">توقيع غرامة تأخير</button>
-            </div>
-          </div>
-        </div>
-
-        <div class="card col-lg-6 col-sm-12 my-5 ">
-          <div class="d-flex justify-content-between align-items-baseline mt-2 ">
-            <span class="first-svg">
-              <svg xmlns="http://www.w3.org/2000/svg" width="30" height="31" viewBox="0 0 30 31" fill="none">
-                <circle cx="15" cy="15.7217" r="15" fill="#FF5555" />
-                <text x="50%" y="50%" text-anchor="middle" dy=".3em" font-size="16" fill="white">5</text>
-              </svg>
-            </span>
-            <div class=" ">
-              <p class="me-3">المرحلةالاولي</p>
-            </div>
-            <div class=" ">
-              <button class="first-stage mx-2">طلب تعديل</button>
-              <button class="recieve-stage mx-2">استلام المرحلة</button>
-            </div>
-          </div>
-          <div class="seperator"></div>
-          <div class="d-flex justify-content-between align-items-baseline my-2 lastCard">
-            <div class="span-stage">
-              <span>عدد التعديلات: <span class="numbers"> 2/5 </span></span>
-              <span class="fasel"> | </span>
-              <span>عدد ايام المرحلة: <span class="numbers"> (10) يوم </span></span>
-            </div>
-            <div class="button-stage">
-              <button class=" request-start-working mx-2">طلب بدءالاعمال</button>
-              <button class="edit-button mx-2">توقيع غرامة تأخير</button>
-            </div>
-          </div>
-        </div>
-
       <!-- start second card -->
-      <div class="card col-md-6 col-sm-12 my-3">
+      <div class="card col-md-6 col-sm-12 my-3" v-for="comment , index in comments" :key="index">
         <div class="d-flex justify-content-between p-2">
           <span class="second-card-title">مرحلة الاستفسارات</span>
           <div class="stars ms-2">
@@ -157,95 +72,12 @@
           </div>
         </div>
         <div class="d-flex justify-content-between p-2">
-          <span class="rate">14/7/2023</span>
-          <span class="rate">اكثر من رائع، ممتاز جدًا. سعدت بالتعامل معكم</span>
+          <span class="rate">{{ comment.created_at.slice(0,comment.created_at.indexOf('T')) }}</span>
+          <span class="rate">{{ comment.comment }}</span>
         </div>
       </div>
 
-      <div class="card col-md-6 col-sm-12 my-3">
-        <div class="d-flex justify-content-between p-2">
-          <span class="second-card-title">مرحلة الاستفسارات</span>
-          <div class="stars ms-2">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="25" viewBox="0 0 24 25" fill="none">
-              <path d="M5.825 22.7217L8.15 15.1217L2 10.7217H9.6L12 2.72168L14.4 10.7217H22L15.85 15.1217L18.175 22.7217L12 18.0217L5.825 22.7217Z" fill="#007060"/>
-            </svg>
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="25" viewBox="0 0 24 25" fill="none">
-              <path d="M5.825 22.7217L8.15 15.1217L2 10.7217H9.6L12 2.72168L14.4 10.7217H22L15.85 15.1217L18.175 22.7217L12 18.0217L5.825 22.7217Z" fill="#007060"/>
-            </svg>
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="25" viewBox="0 0 24 25" fill="none">
-              <path d="M5.825 22.7217L8.15 15.1217L2 10.7217H9.6L12 2.72168L14.4 10.7217H22L15.85 15.1217L18.175 22.7217L12 18.0217L5.825 22.7217Z" fill="#007060"/>
-            </svg>
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="25" viewBox="0 0 24 25" fill="none">
-              <path d="M5.825 22.7217L8.15 15.1217L2 10.7217H9.6L12 2.72168L14.4 10.7217H22L15.85 15.1217L18.175 22.7217L12 18.0217L5.825 22.7217Z" fill="#007060"/>
-            </svg>
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="25" viewBox="0 0 24 25" fill="none">
-              <path d="M5.825 22.7217L8.15 15.1217L2 10.7217H9.6L12 2.72168L14.4 10.7217H22L15.85 15.1217L18.175 22.7217L12 18.0217L5.825 22.7217Z" fill="#007060"/>
-            </svg>
-          </div>
-        </div>
-        <div class="d-flex justify-content-between p-2">
-          <span class="rate">14/7/2023</span>
-          <span class="rate">اكثر من رائع، ممتاز جدًا. سعدت بالتعامل معكم</span>
-        </div>
-      </div>
-
-
-
-      <div class="card col-md-6 col-sm-12 my-3">
-        <div class="d-flex justify-content-between p-2">
-          <span class="second-card-title">مرحلة الاستفسارات</span>
-          <div class="stars ms-2">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="25" viewBox="0 0 24 25" fill="none">
-              <path d="M5.825 22.7217L8.15 15.1217L2 10.7217H9.6L12 2.72168L14.4 10.7217H22L15.85 15.1217L18.175 22.7217L12 18.0217L5.825 22.7217Z" fill="#007060"/>
-            </svg>
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="25" viewBox="0 0 24 25" fill="none">
-              <path d="M5.825 22.7217L8.15 15.1217L2 10.7217H9.6L12 2.72168L14.4 10.7217H22L15.85 15.1217L18.175 22.7217L12 18.0217L5.825 22.7217Z" fill="#007060"/>
-            </svg>
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="25" viewBox="0 0 24 25" fill="none">
-              <path d="M5.825 22.7217L8.15 15.1217L2 10.7217H9.6L12 2.72168L14.4 10.7217H22L15.85 15.1217L18.175 22.7217L12 18.0217L5.825 22.7217Z" fill="#007060"/>
-            </svg>
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="25" viewBox="0 0 24 25" fill="none">
-              <path d="M5.825 22.7217L8.15 15.1217L2 10.7217H9.6L12 2.72168L14.4 10.7217H22L15.85 15.1217L18.175 22.7217L12 18.0217L5.825 22.7217Z" fill="#007060"/>
-            </svg>
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="25" viewBox="0 0 24 25" fill="none">
-              <path d="M5.825 22.7217L8.15 15.1217L2 10.7217H9.6L12 2.72168L14.4 10.7217H22L15.85 15.1217L18.175 22.7217L12 18.0217L5.825 22.7217Z" fill="#007060"/>
-            </svg>
-          </div>
-        </div>
-        <div class="d-flex justify-content-between p-2">
-          <span class="rate">14/7/2023</span>
-          <span class="rate">اكثر من رائع، ممتاز جدًا. سعدت بالتعامل معكم</span>
-        </div>
-      </div>
-
-
-
-      <div class="card col-md-6 col-sm-12 my-3">
-        <div class="d-flex justify-content-between p-2">
-          <span class="second-card-title">مرحلة الاستفسارات</span>
-          <div class="stars ms-2">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="25" viewBox="0 0 24 25" fill="none">
-              <path d="M5.825 22.7217L8.15 15.1217L2 10.7217H9.6L12 2.72168L14.4 10.7217H22L15.85 15.1217L18.175 22.7217L12 18.0217L5.825 22.7217Z" fill="#007060"/>
-            </svg>
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="25" viewBox="0 0 24 25" fill="none">
-              <path d="M5.825 22.7217L8.15 15.1217L2 10.7217H9.6L12 2.72168L14.4 10.7217H22L15.85 15.1217L18.175 22.7217L12 18.0217L5.825 22.7217Z" fill="#007060"/>
-            </svg>
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="25" viewBox="0 0 24 25" fill="none">
-              <path d="M5.825 22.7217L8.15 15.1217L2 10.7217H9.6L12 2.72168L14.4 10.7217H22L15.85 15.1217L18.175 22.7217L12 18.0217L5.825 22.7217Z" fill="#007060"/>
-            </svg>
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="25" viewBox="0 0 24 25" fill="none">
-              <path d="M5.825 22.7217L8.15 15.1217L2 10.7217H9.6L12 2.72168L14.4 10.7217H22L15.85 15.1217L18.175 22.7217L12 18.0217L5.825 22.7217Z" fill="#007060"/>
-            </svg>
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="25" viewBox="0 0 24 25" fill="none">
-              <path d="M5.825 22.7217L8.15 15.1217L2 10.7217H9.6L12 2.72168L14.4 10.7217H22L15.85 15.1217L18.175 22.7217L12 18.0217L5.825 22.7217Z" fill="#007060"/>
-            </svg>
-          </div>
-        </div>
-        <div class="d-flex justify-content-between p-2">
-          <span class="rate">14/7/2023</span>
-          <span class="rate">اكثر من رائع، ممتاز جدًا. سعدت بالتعامل معكم</span>
-        </div>
-      </div>
+      
 
       <!-- sction of modal -->
        
@@ -253,26 +85,29 @@
   </div>
 </template>
 
-<script>
-import ModalComponent from "../../components/projectPhaseModal";
-export default {
-  components: {
-    ModalComponent
-  },
-  data() {
-    return {
-      isModalVisible: false
-    };
-  },
-  methods: {
-    showModal() {
-      this.isModalVisible = true;
-    },
-    closeModal() {
-      this.isModalVisible = false;
-    }
-  }
+<script setup>
+import { onMounted, ref } from 'vue';
+
+/*
+import { ref } from 'vue';
+
+//import ModalComponent from "../../components/projectPhaseModal";
+ const isModalVisible = ref(false) 
+ const showModal = ()=>{
+  isModalVisible.value = true;
+ }
+  const closeModal = ()=>{
+    isModalVisible.value = false;
 }
+*/
+const stages = ref('');
+const comments = ref([]);
+onMounted(() => {
+  setTimeout(() => {
+  stages.value =localStorage.getItem('stages') ?  JSON.parse(localStorage.getItem('stages')) : [];
+  comments.value = localStorage.getItem('project') ? JSON.parse(localStorage.getItem('project')).comments : []
+}, 10);   
+});
 </script>
 
 <style  scoped>
@@ -412,6 +247,7 @@ button {
 
   .span-stage {
     width: 160px;
+    
   }
 
   .lastCard button {
