@@ -4,7 +4,7 @@
       <!-- this is for right column -->
       <div class="col-4">
         <div class="chats-title my-3 border-bottom">محادثات</div>
-        <div class="conv-menu" style="max-height: 40vh; overflow-y: auto;">
+        <div class="conv-menu" style="max-height: 40vh;">
           <div class="d-flex py-2 align-items-center mt-3" v-for="chats , index in chatApi.conversations" :key="index">
             <svg xmlns="http://www.w3.org/2000/svg" width="48" height="46" viewBox="0 0 48 46" fill="none">
               <ellipse cx="23.5508" cy="23" rx="23.5" ry="23" fill="#D9D9D9" />
@@ -21,7 +21,7 @@
         </div>
       </div>
       <!-- left column -->
-      <div id="scrollDiv" class="col-8 py-2 border-end"
+      <div id="scrollDiv" class="col-8 py-2 border-end notify-menu"
        style="max-height: 50vh; min-height: fit-content;overflow-y: auto;scroll-behavior: smooth;scroll-margin-bottom: 0;"
        >
         <div v-for="conv in Array.from(new Set(chatApi.oneConversation))" :key="conv" class="mt-3">
@@ -57,27 +57,27 @@
         </div>
         
       </div>
-    </div>
-    <div class="container w-75" style="position: relative;top: -40px;" v-if="chatApi.conversations.length > 0">
       <div class="row justify-content-end">
-        <div class="col-8">
+        <div class="col-8" style="position: relative;right: 30px;">
           <!--
           <div class="text-center"><span class="text-danger">{{ chatApi.sent }}</span></div>
 
           -->
 <form @submit.prevent="chatApi.sendNewMessage('https://test.m-aboelela.online/api/user/chat/send')"  v-if="chatApi.conversations.length > 0" v-motion-roll-top style="transition: 1s;">
-  <div class="input-group mb-3">
-  <div class="input-group-prepend" style="cursor: pointer;">
-    <span class="input-group-text" id="basic-addon1">ارسال</span>
+  <div class="input-group mb-3" v-if="chatApi.oneConversation.length > 0">
+  <div @click.prevent="chatApi.sendNewMessage('https://test.m-aboelela.online/api/user/chat/send')" class="input-group-prepend" style="cursor: pointer;">
+    <span class="input-group-text fs-4 text-primary" id="basic-addon1">
+      <i class="fa-solid fa-paper-plane"></i>
+    </span>
   </div>
-  <input v-model="chatApi.newMessage" type="text" class="form-control" placeholder="اكتب رسالة ..." aria-label="Username" aria-describedby="basic-addon1">
+  <input  v-model="chatApi.newMessage" type="text" class="form-control" placeholder="اكتب رسالة ..." aria-label="Username" aria-describedby="basic-addon1">
 </div>
 </form>
          
-        </div>
-      </div>
-     
+        </div>     
     </div>
+    </div>
+    
    
   </div>
 </template>
@@ -118,7 +118,8 @@ onMounted(() => {
 * {
   direction: rtl;
 }
-.conv-menu::-webkit-scrollbar {
+
+.conv-menu::-webkit-scrollbar ,.notify-menu::-webkit-scrollbar{
   display: none !important;
   
 }
@@ -150,7 +151,7 @@ border-radius: 20px;
   border-radius: 20px;
   border: 1px solid #BDBDBD;
   background: #FFF;
-  width: 80%;
+  width: 90%;
 }
 
 .custom-hr {

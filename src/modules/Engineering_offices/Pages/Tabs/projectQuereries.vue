@@ -1,16 +1,7 @@
 <template>
   
-  <div class="container m-auto" style="height: 62vh; overflow-y:auto ;">
-    <div class="row justify-content-center text-center">
-      <div class="col-md-8 col-sm-12 mt-5" style="position: sticky;display: block;top: 0;">
-        <form @submit.prevent="addComment">
-          <input type="text" @input="console.log(form.comment)" v-model="form.comment" class="form-control" placeholder="" />
-          <div><span class="text-danger">{{ register }}</span></div>
-          <button class="btn add-comment btn-secondary my-3" type="submit">
-            اضف تعليق
-          </button>
-        </form>
-      </div>
+  <div class="container m-auto">
+    <div class="row justify-content-center text-center notify-menu" style="height: 62vh;">
       <!-- end add comment -->
 
       <!-- display the comment depend on project id  -->
@@ -26,7 +17,7 @@
           </div>
         </div> -->
 
-        <div class="col-md-8 col-sm-12 mt-5 pb-5" v-for="comment in comments" :key="comment">
+        <div class="col-md-8 col-sm-12 mt-5 pb-5" v-for="comment , index in comments.reverse()" :key="index">
     <span class="d-flex">
       <div class="avatar">
         <img src="../../../../assets/ahmedmohsen1.png" alt="" />
@@ -40,7 +31,7 @@
     </span>
 
       <div class="additional-texts my-1 me-5">
-        <span class="text">{{ new Date().toLocaleDateString() }}</span>
+        <span class="text">{{ comment.created_at.slice(0,comment.created_at.indexOf('T')) }}</span>
       </div>
     </div>
         <div v-if="comments.length == 0">
@@ -52,6 +43,16 @@
           <span class="text">19m</span>
           <span class="text">رد</span>
         </div> -->
+      </div>
+      <div class="row justify-content-center text-center">
+        <div class="col-md-8 col-sm-12 mt-5" style="position: sticky;display: block;top: 0;">
+        <form @submit.prevent="addComment">
+          <input type="text" @input="console.log(form.comment)" v-model.lazy="form.comment" class="form-control" placeholder="" />
+          <button class="btn add-comment btn-secondary my-3" type="submit">
+            اضف تعليق
+          </button>
+        </form>
+      </div>
       </div>
     </div>
 </template>
@@ -68,7 +69,6 @@ export default {
     const project_id = route.params.id;
     const user_id = localStorage.getItem("id");
     const comments = ref([]);
-
     const form = ref({
       project_id: "",
       comment: "",
@@ -101,12 +101,9 @@ export default {
       .then((comment)=>{
         console.log(comment.data);
         if(comment.status == 200){
-          register.value = 'تم ارسال تعليقك بنجاح' 
           getAllComments();
           form.value.comment= '';
-          setTimeout(() => {
-            register.value = '';
-          }, 3000);
+        
         }
       }).catch((err)=>{
         console.log(err)
@@ -212,6 +209,15 @@ const getAllComments = () => {
 .add-comment {
   border: none;
 }
+
+.notify-menu{
+  overflow-y: auto;
+}
+.notify-menu::-webkit-scrollbar {
+  display: none !important;
+  
+}
+
 .card {
   border-radius: 14px;
   border: 1px solid #48847b;

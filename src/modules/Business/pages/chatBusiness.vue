@@ -4,7 +4,7 @@
       <!-- this is for right column -->
       <div class="col-4">
         <div class="chats-title my-3 border-bottom">محادثات</div>
-        <div>
+        <div class="conv-menu" style="max-height: 40vh;">
           <div class="d-flex py-2 align-items-center mt-3" v-for="chats , index in chatApi.conversations" :key="index">
             <svg xmlns="http://www.w3.org/2000/svg" width="48" height="46" viewBox="0 0 48 46" fill="none">
               <ellipse cx="23.5508" cy="23" rx="23.5" ry="23" fill="#D9D9D9" />
@@ -21,7 +21,7 @@
         </div>
       </div>
       <!-- left column -->
-      <div id="scrollDiv" class="col-8 py-2 border-end" style="max-height: 50vh; min-height: fit-content;overflow-y: auto;scroll-behavior: smooth;scroll-margin-bottom: 0;">
+      <div id="scrollDiv" class="col-8 py-2 border-end notify-menu" style="max-height: 50vh; min-height: fit-content;overflow-y: auto;scroll-behavior: smooth;scroll-margin-bottom: 0;">
         <div v-for="conv ,index in chatApi.oneConversation" :key="index" class="mt-3">
           <span  class="reomve-spaces d-flex  justify-content-start" >
           <svg v-if="conv.is_sender ==true" xmlns="http://www.w3.org/2000/svg" width="401" height="78" viewBox="0 0 401 78" fill="none">
@@ -55,28 +55,29 @@
         </div>
         
       </div>
-    </div>
-    <div class="container w-75" style="position: relative;top: -40px;">
       <div class="row justify-content-end">
-        <div class="col-8">
+        <div class="col-8" style="position: relative;right: 30px;">
           <!--
           <div class="text-center"><span class="text-danger">{{ chatApi.sent }}</span></div>
 
           -->
 <form @submit.prevent="chatApi.sendNewMessage('https://test.m-aboelela.online/api/business/chat/send')" v-if="chatApi.conversations.length > 0" style="transition: 1s;" v-motion-roll-bottom>
-  <div class="input-group mb-3">
-  <div class="input-group-prepend" style="cursor: pointer;">
-    <span class="input-group-text" id="basic-addon1">ارسال</span>
+  <div class="input-group mb-3" v-if="chatApi.oneConversation.length > 0">
+  <div @click.prevent="chatApi.sendNewMessage('https://test.m-aboelela.online/api/business/chat/send')" class="input-group-prepend" style="cursor: pointer;">
+    <span class="input-group-text fs-4 text-primary" id="basic-addon1">
+      <i class="fa-solid fa-paper-plane"></i>
+    </span>
   </div>
   <input v-model="chatApi.newMessage" type="text" class="form-control" placeholder="اكتب رسالة ..." aria-label="Username" aria-describedby="basic-addon1">
 </div>
 </form>
          
-        </div>
       </div>
      
     </div>
    
+    </div>
+    
   </div>
 </template>
 
@@ -128,13 +129,15 @@ onMounted(async() => {
   direction: rtl;
 }
 
-
+.conv-menu::-webkit-scrollbar , .notify-menu::-webkit-scrollbar{
+  display: none !important;
+  
+}
 .active{
-background-color: #223184;
+  background-color: #54847D;
 padding: 10px;
 transition: 0.5s;
 border-radius: 20px;
-text-shadow: 5px 3px 4px yellow;
 }
 .sideCard {
     position: absolute;
@@ -157,7 +160,7 @@ text-shadow: 5px 3px 4px yellow;
   border-radius: 20px;
   border: 1px solid #BDBDBD;
   background: #FFF;
-  width: 80%;
+  width: 90%;
 }
 
 .custom-hr {
